@@ -1,0 +1,27 @@
+Discover includes this:
+
+In file included from /usr/include/asm/system.h:19,
+                 from /usr/include/linux/spinlock.h:17,
+                 from /usr/include/linux/device.h:18,
+                 from /usr/include/linux/genhd.h:15,
+                 from discover.h:25,
+                 from bridge.c:22:
+
+--- include/asm-ia64/pal.h.orig	2003-11-23 15:40:38.000000000 -0500
++++ include/asm-ia64/pal.h	2003-11-23 15:41:08.000000000 -0500
+@@ -1,6 +1,8 @@
+ #ifndef _ASM_IA64_PAL_H
+ #define _ASM_IA64_PAL_H
+ 
++#ifndef __KERNEL__
++
+ /*
+  * Processor Abstraction Layer definitions.
+  *
+@@ -1435,4 +1437,6 @@ ia64_pal_prefetch_visibility (void)
+ 
+ #endif /* __ASSEMBLY__ */
+ 
++#endif /* __KERNEL__ */
++
+ #endif /* _ASM_IA64_PAL_H */

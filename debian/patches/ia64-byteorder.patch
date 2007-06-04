@@ -1,0 +1,21 @@
+--- include/asm-ia64/byteorder.h	2003-12-30 14:48:47.000000000 -0500
++++ include/asm-ia64/byteorder.h	2004-01-03 12:35:48.000000000 -0500
+@@ -7,6 +7,9 @@
+  */
+ 
+ #include <asm/types.h>
++
++#ifdef __KERNEL__
++
+ #include <asm/intrinsics.h>
+ 
+ static __inline__ __const__ __u64
+@@ -34,6 +37,8 @@
+ #define __arch__swab32(x) __ia64_swab32(x)
+ #define __arch__swab16(x) __ia64_swab16(x)
+ 
++#endif /* __KERNEL__ */
++
+ #define __BYTEORDER_HAS_U64__
+ 
+ #include <linux/byteorder/little_endian.h>

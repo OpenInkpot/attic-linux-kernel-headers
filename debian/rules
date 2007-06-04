@@ -1,0 +1,109 @@
+#!/usr/bin/make -f
+
+# Work around a bug in cdbs 0.4.14.
+DEB_PATCHDIRS_READONLY = no
+
+DEB_ARCH_PACKAGES = linux-kernel-headers
+DEB_INDEP_PACKAGES = linux-kernel-headers-source
+
+# This implements the .deb package creation using debhelper.
+include /usr/share/cdbs/1/rules/debhelper.mk
+
+# Simple patches in debian/patches.
+include /usr/share/cdbs/1/rules/simple-patchsys.mk
+
+pkgdir = debian/$(DEB_ARCH_PACKAGES)
+includedir = $(pkgdir)/usr/include
+srcpkg = $(DEB_INDEP_PACKAGES)
+srcpkgdir = debian/$(srcpkg)
+
+kernel_arch := $(DEB_HOST_ARCH_CPU)
+kernel_arch := $(patsubst powerpc,ppc,$(kernel_arch))
+kernel_arch := $(patsubst hppa,parisc,$(kernel_arch))
+kernel_arch := $(patsubst mipsel,mips,$(kernel_arch))
+kernel_arch := $(patsubst amd64,x86_64,$(kernel_arch))
+
+other_headers := $(wildcard others/asm-$(kernel_arch)-*)
+other_headers_inst := $(patsubst others/asm-$(kernel_arch)-%,%,$(other_headers))
+
+# Install architecture-specific headers into debian/linux-kernel-headers.
+# Common headers are handled by linux-kernel-headers.install.
+common-install-arch:: lkh-install lkh-test
+common-install-indep:: lkh-src-install
+pre-build:: pre-lkh-src-install
+
+lkh-install: stamp-lkh-install
+stamp-lkh-install: build
+	rm -rf $(includedir)
+	install -d $(includedir)
+	install -d $(includedir)/linux
+
+ifneq (,$(findstring $(DEB_HOST_ARCH), powerpc sparc))
+	sh debian/generate-asm.sh $(DEB_HOST_ARCH) include $(includedir)
+else
+	cp -a include/asm-$(kernel_arch) $(includedir)/asm
+endif
+
+	cp autoconfs/autoconf-$(DEB_HOST_ARCH_CPU).h $(includedir)/linux/autoconf.h
+
+ifeq ($(kernel_arch),x86_64)
+	# install the i386 kernel headers in /usr/include/i386-linux
+	mkdir -p $(includedir)/i386-linux
+	ln -s ../linux $(includedir)/i386-linux
+	ln -s ../asm-generic $(includedir)/i386-linux
+	cp -a include/asm-i386 $(includedir)/i386-linux/asm
+endif
+
+ifeq ($(kernel_arch),arm)
+	# ARM needs some extra symlinks.
+	rm -f $(includedir)/asm/proc
+	rm -f $(includedir)/asm/arch
+	ln -s proc-armv $(includedir)/asm/proc
+	ln -s arch-ebsa285 $(includedir)/asm/arch
+endif
+
+	# Some architectures need to include generated headers.  We can't
+	# generate them at build time, so maintain a static collection.
+	# Note: not compatible with Sparc hack, above.
+	for i in dummy $(other_headers_inst); do \
+	  if test $$i != dummy; then \
+	    cp others/asm-$(kernel_arch)-$$i \
+	       $(includedir)/asm/$$i; \
+	  fi; \
+	done
+
+	touch $@
+
+lkh-test: lkh-install build
+	# Make a testsuite only if we're not cross-compiling.
+#ifeq ($(DEB_BUILD_ARCH), $(DEB_HOST_ARCH))
+#	$(MAKE) -C testsuite all
+#endif
+
+pre-lkh-src-install: stamp-pre-lkh-src-install
+stamp-pre-lkh-src-install:
+	mkdir -p lkh-source/debian
+	for f in *; do \
+		[ "$$f" != "debian" -a "$$f" != "lkh-source" ] && \
+		( tar --exclude='\.svn' -cf - $$f ) | \
+		( cd lkh-source/; \
+			tar xf - ); \
+	done
+
+	for f in `find debian/ -maxdepth 1 -type f` debian/patches; do \
+		cp -a $$f lkh-source/debian/; \
+	done
+	rm -rf lkh-source/.svn lkh-source/debian/patches/.svn
+	touch $@
+
+lkh-src-install: stamp-lkh-src-install stamp-pre-lkh-src-install
+stamp-lkh-src-install:
+	install -d $(srcpkgdir)/usr/src/
+
+	mv lkh-source $(srcpkgdir)/usr/src/$(srcpkg)
+	touch $@
+
+clean::
+	$(MAKE) -C testsuite clean
+	rm -f stamp-lkh-install
+	rm -f stamp-pre-lkh-src-install stamp-lkh-src-install

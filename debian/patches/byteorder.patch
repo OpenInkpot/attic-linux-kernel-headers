@@ -1,0 +1,67 @@
+diff -urp include.b/linux/byteorder/swab.h include/linux/byteorder/swab.h
+--- include.b/linux/byteorder/swab.h	2003-11-21 19:42:21.000000000 -0500
++++ include/linux/byteorder/swab.h	2003-11-21 22:31:33.000000000 -0500
+@@ -19,7 +19,7 @@
+  * how U/UL/ULL map to __u16, __u32, __u64. At least not in a portable way.
+  */
+ #define ___swab16(x) \
+-({ \
++__extension__ ({ \
+ 	__u16 __x = (x); \
+ 	((__u16)( \
+ 		(((__u16)(__x) & (__u16)0x00ffU) << 8) | \
+@@ -27,7 +27,7 @@
+ })
+ 
+ #define ___swab32(x) \
+-({ \
++__extension__ ({ \
+ 	__u32 __x = (x); \
+ 	((__u32)( \
+ 		(((__u32)(__x) & (__u32)0x000000ffUL) << 24) | \
+@@ -37,7 +37,7 @@
+ })
+ 
+ #define ___swab64(x) \
+-({ \
++__extension__ ({ \
+ 	__u64 __x = (x); \
+ 	((__u64)( \
+ 		(__u64)(((__u64)(__x) & (__u64)0x00000000000000ffULL) << 56) | \
+@@ -75,13 +75,13 @@
+  * provide defaults when no architecture-specific optimization is detected
+  */
+ #ifndef __arch__swab16
+-#  define __arch__swab16(x) ({ __u16 __tmp = (x) ; ___swab16(__tmp); })
++#  define __arch__swab16(x) __extension__ ({ __u16 __tmp = (x) ; ___swab16(__tmp); })
+ #endif
+ #ifndef __arch__swab32
+-#  define __arch__swab32(x) ({ __u32 __tmp = (x) ; ___swab32(__tmp); })
++#  define __arch__swab32(x) __extension__ ({ __u32 __tmp = (x) ; ___swab32(__tmp); })
+ #endif
+ #ifndef __arch__swab64
+-#  define __arch__swab64(x) ({ __u64 __tmp = (x) ; ___swab64(__tmp); })
++#  define __arch__swab64(x) __extension__ ({ __u64 __tmp = (x) ; ___swab64(__tmp); })
+ #endif
+ 
+ #ifndef __arch__swab16p
+diff -urp include.b/linux/byteorder/swabb.h include/linux/byteorder/swabb.h
+--- include.b/linux/byteorder/swabb.h	2003-11-21 19:42:21.000000000 -0500
++++ include/linux/byteorder/swabb.h	2003-11-21 22:31:33.000000000 -0500
+@@ -26,14 +26,14 @@
+  */
+ 
+ #define ___swahw32(x) \
+-({ \
++__extension__ ({ \
+ 	__u32 __x = (x); \
+ 	((__u32)( \
+ 		(((__u32)(__x) & (__u32)0x0000ffffUL) << 16) | \
+ 		(((__u32)(__x) & (__u32)0xffff0000UL) >> 16) )); \
+ })
+ #define ___swahb32(x) \
+-({ \
++__extension__ ({ \
+ 	__u32 __x = (x); \
+ 	((__u32)( \
+ 		(((__u32)(__x) & (__u32)0x00ff00ffUL) << 8) | \

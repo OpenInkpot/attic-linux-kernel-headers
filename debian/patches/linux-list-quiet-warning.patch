@@ -1,0 +1,10 @@
+--- include/linux/list.h.o	2003-11-21 18:48:34.000000000 -0500
++++ include/linux/list.h	2003-11-21 18:48:47.000000000 -0500
+@@ -573,6 +573,6 @@
+ 		({ tpos = hlist_entry(pos, typeof(*tpos), member); 1;}); \
+ 	     pos = n)
+ #else
+-#warning "don't include kernel headers in userspace"
++/* #warning "don't include kernel headers in userspace" */
+ #endif /* __KERNEL__ */
+ #endif

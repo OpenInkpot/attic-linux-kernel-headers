@@ -1,0 +1,23 @@
+--- include/linux/spinlock.h	2004-01-03 13:08:15.000000000 -0500
++++ include/linux/spinlock.h	2004-01-03 13:09:05.000000000 -0500
+@@ -1,6 +1,13 @@
+ #ifndef __LINUX_SPINLOCK_H
+ #define __LINUX_SPINLOCK_H
+ 
++#ifndef __KERNEL__
++
++typedef struct { int empty; } spinlock_t;
++typedef struct { int empty; } rwlock_t;
++
++#else
++
+ /*
+  * include/linux/spinlock.h - generic locking declarations
+  */
+@@ -465,4 +472,6 @@
+ #endif
+ }
+ 
++#endif /* __KERNEL__ */
++
+ #endif /* __LINUX_SPINLOCK_H */

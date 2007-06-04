@@ -1,0 +1,86 @@
+Block off the contents of a few more headers, and leave out an unneeded
+padding field on LP64 targets.
+
+diff -urp include/asm-ia64/atomic.h include/asm-ia64/atomic.h
+--- include/asm-ia64/atomic.h	2003-10-15 11:10:48.000000000 -0400
++++ include/asm-ia64/atomic.h	2003-12-30 14:37:52.000000000 -0500
+@@ -23,6 +23,8 @@
+ typedef struct { volatile __s32 counter; } atomic_t;
+ typedef struct { volatile __s64 counter; } atomic64_t;
+ 
++#ifdef __KERNEL__
++
+ #define ATOMIC_INIT(i)		((atomic_t) { (i) })
+ #define ATOMIC64_INIT(i)	((atomic64_t) { (i) })
+ 
+@@ -180,4 +182,6 @@ atomic64_add_negative (__s64 i, atomic64
+ #define smp_mb__before_atomic_inc()	barrier()
+ #define smp_mb__after_atomic_inc()	barrier()
+ 
++#endif
++
+ #endif /* _ASM_IA64_ATOMIC_H */
+diff -urp include/asm-parisc/system.h include/asm-parisc/system.h
+--- include/asm-parisc/system.h	2003-10-15 11:13:05.000000000 -0400
++++ include/asm-parisc/system.h	2003-12-30 14:34:27.000000000 -0500
+@@ -1,6 +1,8 @@
+ #ifndef __PARISC_SYSTEM_H
+ #define __PARISC_SYSTEM_H
+ 
++#ifdef __KERNEL__
++
+ #include <linux/config.h>
+ #include <asm/psw.h>
+ 
+@@ -157,3 +159,5 @@ typedef struct {
+ #endif
+ 
+ #endif
++
++#endif
+diff -urp include/asm-sparc/types.h include/asm-sparc/types.h
+--- include/asm-sparc/types.h	2003-10-15 11:12:23.000000000 -0400
++++ include/asm-sparc/types.h	2003-12-30 14:29:37.000000000 -0500
+@@ -28,8 +28,10 @@ typedef unsigned short __u16;
+ typedef __signed__ int __s32;
+ typedef unsigned int __u32;
+ 
++#ifndef __STRICT_ANSI__
+ typedef __signed__ long long __s64;
+ typedef unsigned long long __u64;
++#endif
+ 
+ #endif /* __ASSEMBLY__ */
+ 
+diff -urp include/asm-sparc64/system.h include/asm-sparc64/system.h
+--- include/asm-sparc64/system.h	2003-10-15 11:09:49.000000000 -0400
++++ include/asm-sparc64/system.h	2003-12-30 14:31:24.000000000 -0500
+@@ -30,6 +30,8 @@ enum sparc_cpu {
+ 
+ #endif
+ 
++#ifdef __KERNEL__
++
+ #define setipl(__new_ipl) \
+ 	__asm__ __volatile__("wrpr	%0, %%pil"  : : "r" (__new_ipl) : "memory")
+ 
+@@ -334,4 +336,6 @@ __cmpxchg(volatile void *ptr, unsigned l
+ 
+ #endif /* !(__ASSEMBLY__) */
+ 
++#endif
++
+ #endif /* !(__SPARC64_SYSTEM_H) */
+diff -urp include/linux/kernel.h include/linux/kernel.h
+--- include/linux/kernel.h	2003-10-15 11:09:46.000000000 -0400
++++ include/linux/kernel.h	2003-12-30 14:36:08.000000000 -0500
+@@ -223,7 +223,9 @@ struct sysinfo {
+ 	unsigned long totalhigh;	/* Total high memory size */
+ 	unsigned long freehigh;		/* Available high memory size */
+ 	unsigned int mem_unit;		/* Memory unit size in bytes */
++#if !defined(_LP64) && !defined(__ia64__) && !defined(__s390x__) && !defined(__alpha__)
+ 	char _f[20-2*sizeof(long)-sizeof(int)];	/* Padding: libc5 uses this.. */
++#endif
+ };
+ 
+ extern void BUILD_BUG(void);

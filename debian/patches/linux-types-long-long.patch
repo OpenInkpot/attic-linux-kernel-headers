@@ -1,0 +1,228 @@
+Add some __extension__ keywords to let <linux/types.h> work with -ansi
+-pedantic.
+
+diff -Nurp include.orig/asm-alpha/posix_types.h include/asm-alpha/posix_types.h
+--- include.orig/asm-alpha/posix_types.h	2003-10-15 11:13:20.000000000 -0400
++++ include/asm-alpha/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -11,7 +11,7 @@ typedef unsigned int	__kernel_ino_t;
+ typedef unsigned int	__kernel_mode_t;
+ typedef unsigned int	__kernel_nlink_t;
+ typedef long		__kernel_off_t;
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ typedef int		__kernel_pid_t;
+ typedef int		__kernel_ipc_pid_t;
+ typedef unsigned int	__kernel_uid_t;
+diff -Nurp include.orig/asm-arm/posix_types.h include/asm-arm/posix_types.h
+--- include.orig/asm-arm/posix_types.h	2003-10-15 11:10:23.000000000 -0400
++++ include/asm-arm/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -47,7 +47,7 @@ typedef unsigned short		__kernel_old_gid
+ typedef unsigned short		__kernel_old_dev_t;
+ 
+ #ifdef __GNUC__
+-typedef long long		__kernel_loff_t;
++__extension__ typedef long long		__kernel_loff_t;
+ #endif
+ 
+ typedef struct {
+diff -Nurp include.orig/asm-arm26/posix_types.h include/asm-arm26/posix_types.h
+--- include.orig/asm-arm26/posix_types.h	2003-10-15 11:13:14.000000000 -0400
++++ include/asm-arm26/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -46,7 +46,7 @@ typedef unsigned short		__kernel_old_uid
+ typedef unsigned short		__kernel_old_gid_t;
+ 
+ #ifdef __GNUC__
+-typedef long long		__kernel_loff_t;
++__extension__ typedef long long		__kernel_loff_t;
+ #endif
+ 
+ typedef struct {
+diff -Nurp include.orig/asm-cris/posix_types.h include/asm-cris/posix_types.h
+--- include.orig/asm-cris/posix_types.h	2003-10-15 11:10:49.000000000 -0400
++++ include/asm-cris/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -42,7 +42,7 @@ typedef unsigned short  __kernel_old_gid
+ typedef unsigned short	__kernel_old_dev_t;
+ 
+ #ifdef __GNUC__
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ #endif
+ 
+ typedef struct {
+diff -Nurp include.orig/asm-h8300/posix_types.h include/asm-h8300/posix_types.h
+--- include.orig/asm-h8300/posix_types.h	2003-10-15 11:09:47.000000000 -0400
++++ include/asm-h8300/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -34,7 +34,7 @@ typedef unsigned short	__kernel_old_uid_
+ typedef unsigned short	__kernel_old_gid_t;
+ 
+ #ifdef __GNUC__
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ #endif
+ 
+ typedef struct {
+diff -Nurp include.orig/asm-i386/posix_types.h include/asm-i386/posix_types.h
+--- include.orig/asm-i386/posix_types.h	2003-10-15 11:14:51.000000000 -0400
++++ include/asm-i386/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -35,7 +35,7 @@ typedef unsigned short	__kernel_old_gid_
+ typedef unsigned short	__kernel_old_dev_t;
+ 
+ #ifdef __GNUC__
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ #endif
+ 
+ typedef struct {
+diff -Nurp include.orig/asm-ia64/posix_types.h include/asm-ia64/posix_types.h
+--- include.orig/asm-ia64/posix_types.h	2003-10-15 11:11:26.000000000 -0400
++++ include/asm-ia64/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -14,7 +14,7 @@ typedef unsigned int	__kernel_ino_t;
+ typedef unsigned int	__kernel_mode_t;
+ typedef unsigned int	__kernel_nlink_t;
+ typedef long		__kernel_off_t;
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ typedef int		__kernel_pid_t;
+ typedef int		__kernel_ipc_pid_t;
+ typedef unsigned int	__kernel_uid_t;
+diff -Nurp include.orig/asm-m68k/posix_types.h include/asm-m68k/posix_types.h
+--- include.orig/asm-m68k/posix_types.h	2003-10-15 11:10:27.000000000 -0400
++++ include/asm-m68k/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -35,7 +35,7 @@ typedef unsigned short	__kernel_old_gid_
+ typedef unsigned short	__kernel_old_dev_t;
+ 
+ #ifdef __GNUC__
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ #endif
+ 
+ typedef struct {
+diff -Nurp include.orig/asm-mips/posix_types.h include/asm-mips/posix_types.h
+--- include.orig/asm-mips/posix_types.h	2003-10-15 11:13:08.000000000 -0400
++++ include/asm-mips/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -57,7 +57,7 @@ typedef __kernel_gid_t	__kernel_old_gid_
+ typedef unsigned int	__kernel_old_dev_t;
+ 
+ #ifdef __GNUC__
+-typedef long long      __kernel_loff_t;
++__extension__ typedef long long      __kernel_loff_t;
+ #endif
+ 
+ typedef struct {
+diff -Nurp include.orig/asm-parisc/posix_types.h include/asm-parisc/posix_types.h
+--- include.orig/asm-parisc/posix_types.h	2003-10-15 11:14:14.000000000 -0400
++++ include/asm-parisc/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -39,9 +39,9 @@ typedef unsigned int		__kernel_uid32_t;
+ typedef unsigned int		__kernel_gid32_t;
+ 
+ #ifdef __GNUC__
+-typedef long long		__kernel_loff_t;
+-typedef long long		__kernel_off64_t;
+-typedef unsigned long long	__kernel_ino64_t;
++__extension__ typedef long long		__kernel_loff_t;
++__extension__ typedef long long		__kernel_off64_t;
++__extension__ typedef unsigned long long	__kernel_ino64_t;
+ #endif
+ 
+ typedef unsigned int		__kernel_old_dev_t;
+diff -Nurp include.orig/asm-ppc/posix_types.h include/asm-ppc/posix_types.h
+--- include.orig/asm-ppc/posix_types.h	2003-10-15 11:12:09.000000000 -0400
++++ include/asm-ppc/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -35,7 +35,7 @@ typedef unsigned int	__kernel_old_gid_t;
+ typedef unsigned int	__kernel_old_dev_t;
+ 
+ #ifdef __GNUC__
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ #endif
+ 
+ typedef struct {
+diff -Nurp include.orig/asm-ppc64/posix_types.h include/asm-ppc64/posix_types.h
+--- include.orig/asm-ppc64/posix_types.h	2003-10-15 11:15:13.000000000 -0400
++++ include/asm-ppc64/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -16,7 +16,7 @@ typedef unsigned long	__kernel_ino_t;
+ typedef unsigned long  	__kernel_nlink_t;
+ typedef unsigned int	__kernel_mode_t;
+ typedef long		__kernel_off_t;
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ typedef int		__kernel_pid_t;
+ typedef int             __kernel_ipc_pid_t;
+ typedef unsigned int	__kernel_uid_t;
+diff -Nurp include.orig/asm-s390/posix_types.h include/asm-s390/posix_types.h
+--- include.orig/asm-s390/posix_types.h	2003-10-15 11:09:43.000000000 -0400
++++ include/asm-s390/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -29,7 +29,7 @@ typedef unsigned short	__kernel_uid16_t;
+ typedef unsigned short	__kernel_gid16_t;
+ 
+ #ifdef __GNUC__
+-typedef long long       __kernel_loff_t;
++__extension__ typedef long long       __kernel_loff_t;
+ #endif
+ 
+ #ifndef __s390x__
+diff -Nurp include.orig/asm-sh/posix_types.h include/asm-sh/posix_types.h
+--- include.orig/asm-sh/posix_types.h	2003-10-15 11:12:09.000000000 -0400
++++ include/asm-sh/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -35,7 +35,7 @@ typedef unsigned short	__kernel_old_gid_
+ typedef unsigned short	__kernel_old_dev_t;
+ 
+ #ifdef __GNUC__
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ #endif
+ 
+ typedef struct {
+diff -Nurp include.orig/asm-sparc/posix_types.h include/asm-sparc/posix_types.h
+--- include.orig/asm-sparc/posix_types.h	2003-10-15 11:11:26.000000000 -0400
++++ include/asm-sparc/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -35,7 +35,7 @@ typedef int                    __kernel_
+ typedef int                    __kernel_timer_t;
+ 
+ #ifdef __GNUC__
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ #endif
+ 
+ typedef struct {
+diff -Nurp include.orig/asm-sparc64/posix_types.h include/asm-sparc64/posix_types.h
+--- include.orig/asm-sparc64/posix_types.h	2003-10-15 11:14:20.000000000 -0400
++++ include/asm-sparc64/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -39,7 +39,7 @@ typedef unsigned int	       __kernel_old
+ typedef int		       __kernel_suseconds_t;
+ 
+ #ifdef __GNUC__
+-typedef long long              __kernel_loff_t;
++__extension__ typedef long long              __kernel_loff_t;
+ #endif
+ 
+ typedef struct {
+diff -Nurp include.orig/asm-v850/posix_types.h include/asm-v850/posix_types.h
+--- include.orig/asm-v850/posix_types.h	2003-10-15 11:15:13.000000000 -0400
++++ include/asm-v850/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -15,11 +15,11 @@
+ #define __V850_POSIX_TYPES_H__
+ 
+ typedef unsigned long	__kernel_ino_t;
+-typedef unsigned long long __kernel_ino64_t;
++__extension__ typedef unsigned long long __kernel_ino64_t;
+ typedef unsigned int	__kernel_mode_t;
+ typedef unsigned int	__kernel_nlink_t;
+ typedef long		__kernel_off_t;
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ typedef int		__kernel_pid_t;
+ typedef unsigned short	__kernel_ipc_pid_t;
+ typedef unsigned int	__kernel_uid_t;
+diff -Nurp include.orig/asm-x86_64/posix_types.h include/asm-x86_64/posix_types.h
+--- include.orig/asm-x86_64/posix_types.h	2003-10-15 11:15:02.000000000 -0400
++++ include/asm-x86_64/posix_types.h	2003-11-23 16:08:42.000000000 -0500
+@@ -29,7 +29,7 @@ typedef unsigned short	__kernel_uid16_t;
+ typedef unsigned short	__kernel_gid16_t;
+ 
+ #ifdef __GNUC__
+-typedef long long	__kernel_loff_t;
++__extension__ typedef long long	__kernel_loff_t;
+ #endif
+ 
+ typedef struct {

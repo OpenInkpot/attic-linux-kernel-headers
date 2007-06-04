@@ -1,0 +1,90 @@
+Update 2005-05-05 gotom, move linux/byteorder/swab.h part to byteorder.patch.
+
+--- include/linux/byteorder/swab.h	2004-01-03 13:53:25.000000000 -0500
++++ include/linux/byteorder/swab.h	2004-01-04 18:01:22.000000000 -0500
+@@ -154,6 +154,7 @@
+ 	__arch__swab32s(addr);
+ }
+ 
++#ifndef __STRICT_ANSI__
+ #ifdef __BYTEORDER_HAS_U64__
+ static __inline__ __u64 __fswab64(__u64 x)
+ {
+@@ -174,6 +175,7 @@
+ 	__arch__swab64s(addr);
+ }
+ #endif /* __BYTEORDER_HAS_U64__ */
++#endif /* __STRICT_ANSI__ */
+ 
+ #if defined(__KERNEL__)
+ #define swab16 __swab16
+--- include/asm-alpha/compiler.h	2003-10-15 11:13:17.000000000 -0400
++++ include/asm-alpha/compiler.h	2004-01-04 18:03:52.000000000 -0500
+@@ -22,43 +22,43 @@
+ # define __kernel_ctpop(x)		__builtin_popcount(x)
+ #else
+ # define __kernel_insbl(val, shift)					\
+-  ({ unsigned long __kir;						\
++  __extension__ ({ unsigned long __kir;						\
+      __asm__("insbl %2,%1,%0" : "=r"(__kir) : "rI"(shift), "r"(val));	\
+      __kir; })
+ # define __kernel_inswl(val, shift)					\
+-  ({ unsigned long __kir;						\
++  __extension__ ({ unsigned long __kir;						\
+      __asm__("inswl %2,%1,%0" : "=r"(__kir) : "rI"(shift), "r"(val));	\
+      __kir; })
+ # define __kernel_insql(val, shift)					\
+-  ({ unsigned long __kir;						\
++  __extension__ ({ unsigned long __kir;						\
+      __asm__("insql %2,%1,%0" : "=r"(__kir) : "rI"(shift), "r"(val));	\
+      __kir; })
+ # define __kernel_inslh(val, shift)					\
+-  ({ unsigned long __kir;						\
++  __extension__ ({ unsigned long __kir;						\
+      __asm__("inslh %2,%1,%0" : "=r"(__kir) : "rI"(shift), "r"(val));	\
+      __kir; })
+ # define __kernel_extbl(val, shift)					\
+-  ({ unsigned long __kir;						\
++  __extension__ ({ unsigned long __kir;						\
+      __asm__("extbl %2,%1,%0" : "=r"(__kir) : "rI"(shift), "r"(val));	\
+      __kir; })
+ # define __kernel_extwl(val, shift)					\
+-  ({ unsigned long __kir;						\
++  __extension__ ({ unsigned long __kir;						\
+      __asm__("extwl %2,%1,%0" : "=r"(__kir) : "rI"(shift), "r"(val));	\
+      __kir; })
+ # define __kernel_cmpbge(a, b)						\
+-  ({ unsigned long __kir;						\
++  __extension__ ({ unsigned long __kir;						\
+      __asm__("cmpbge %r2,%1,%0" : "=r"(__kir) : "rI"(b), "rJ"(a));	\
+      __kir; })
+ # define __kernel_cttz(x)						\
+-  ({ unsigned long __kir;						\
++  __extension__ ({ unsigned long __kir;						\
+      __asm__("cttz %1,%0" : "=r"(__kir) : "r"(x));			\
+      __kir; })
+ # define __kernel_ctlz(x)						\
+-  ({ unsigned long __kir;						\
++  __extension__ ({ unsigned long __kir;						\
+      __asm__("ctlz %1,%0" : "=r"(__kir) : "r"(x));			\
+      __kir; })
+ # define __kernel_ctpop(x)						\
+-  ({ unsigned long __kir;						\
++  __extension__ ({ unsigned long __kir;						\
+      __asm__("ctpop %1,%0" : "=r"(__kir) : "r"(x));			\
+      __kir; })
+ #endif
+@@ -77,11 +77,11 @@
+ #define __kernel_stw(val,mem)	((mem) = (val))
+ #else
+ #define __kernel_ldbu(mem)				\
+-  ({ unsigned char __kir;				\
++  __extension__ ({ unsigned char __kir;				\
+      __asm__("ldbu %0,%1" : "=r"(__kir) : "m"(mem));	\
+      __kir; })
+ #define __kernel_ldwu(mem)				\
+-  ({ unsigned short __kir;				\
++  __extension__ ({ unsigned short __kir;				\
+      __asm__("ldwu %0,%1" : "=r"(__kir) : "m"(mem));	\
+      __kir; })
+ #define __kernel_stb(val,mem) \

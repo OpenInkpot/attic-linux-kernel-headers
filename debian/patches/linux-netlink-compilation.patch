@@ -1,0 +1,38 @@
+Update 2005-05-05 gotom, move __KERNEL__ in linux/netlink.h in order to
+include in-kernel enum definition.
+
+--- include/linux/uio.h.t	2003-11-21 18:27:56.000000000 -0500
++++ include/linux/uio.h	2003-11-21 18:28:23.000000000 -0500
+@@ -35,6 +35,8 @@
+                                 /* Beg pardon: BSD has 1024 --ANK */
+ #endif
+ 
++#ifdef __KERNEL__
++
+ /*
+  * Total number of bytes covered by an iovec.
+  *
+@@ -55,3 +57,5 @@
+ unsigned long iov_shorten(struct iovec *iov, unsigned long nr_segs, size_t to);
+ 
+ #endif
++
++#endif
+--- include.orig/linux/netlink.h	2005-04-21 09:03:16.000000000 +0900
++++ include/linux/netlink.h	2005-05-05 22:34:40.546572593 +0900
+@@ -91,14 +91,13 @@
+ };
+ 
+ #define NET_MAJOR 36		/* Major 36 is reserved for networking 						*/
++#ifdef __KERNEL__
+ 
+ enum {
+ 	NETLINK_UNCONNECTED = 0,
+ 	NETLINK_CONNECTED,
+ };
+ 
+-#ifdef __KERNEL__
+-
+ #include <linux/capability.h>
+ #include <linux/skbuff.h>
+ 

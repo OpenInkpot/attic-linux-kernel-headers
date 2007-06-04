@@ -1,0 +1,45 @@
+Fixes use of <linux/usb.h> from userspace.
+
+Update 2005-05-05 gotom, usb_ch9.h should include linux/types.h
+instead of asm/types.h due to install __le16.
+
+--- include.orig/linux/usb.h	2005-04-21 20:04:32.000000000 +0900
++++ include/linux/usb.h	2005-05-05 17:20:59.610762324 +0900
+@@ -1,7 +1,6 @@
+ #ifndef __LINUX_USB_H
+ #define __LINUX_USB_H
+ 
+-#include <linux/mod_devicetable.h>
+ #include <linux/usb_ch9.h>
+ 
+ #define USB_MAJOR			180
+@@ -19,6 +18,7 @@
+ #include <linux/fs.h>		/* for struct file_operations */
+ #include <linux/completion.h>	/* for struct completion */
+ #include <linux/sched.h>	/* for current && schedule_timeout */
++#include <linux/mod_devicetable.h>
+ 
+ struct usb_device;
+ struct usb_driver;
+--- include.orig/linux/usb_ch9.h	2005-04-21 09:03:16.000000000 +0900
++++ include/linux/usb_ch9.h	2005-05-05 17:14:54.565648303 +0900
+@@ -16,7 +16,7 @@
+ #ifndef __LINUX_USB_CH9_H
+ #define __LINUX_USB_CH9_H
+ 
+-#include <asm/types.h>		/* __u8 etc */
++#include <linux/types.h>	/* __u8 etc */
+ 
+ /*-------------------------------------------------------------------------*/
+ 
+@@ -268,8 +268,8 @@
+ 	__le16 wMaxPacketSize;
+ 	__u8  bInterval;
+ 
+-	// NOTE:  these two are _only_ in audio endpoints.
+-	// use USB_DT_ENDPOINT*_SIZE in bLength, not sizeof.
++	/* NOTE:  these two are _only_ in audio endpoints. */
++	/* use USB_DT_ENDPOINT*_SIZE in bLength, not sizeof. */
+ 	__u8  bRefresh;
+ 	__u8  bSynchAddress;
+ } __attribute__ ((packed));

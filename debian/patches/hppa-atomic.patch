@@ -1,0 +1,18 @@
+--- include/asm-parisc/atomic.h	2003-10-15 11:11:27.000000000 -0400
++++ include/asm-parisc/atomic.h	2004-01-07 13:14:05.000000000 -0500
+@@ -1,6 +1,8 @@
+ #ifndef _ASM_PARISC_ATOMIC_H_
+ #define _ASM_PARISC_ATOMIC_H_
+ 
++#ifdef __KERNEL__
++
+ #include <linux/config.h>
+ #include <asm/system.h>
+ 
+@@ -181,4 +183,6 @@
+ #define smp_mb__before_atomic_inc()	smp_mb()
+ #define smp_mb__after_atomic_inc()	smp_mb()
+ 
++#endif /* __KERNEL__ */
++
+ #endif

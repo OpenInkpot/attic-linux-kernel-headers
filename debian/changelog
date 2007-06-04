@@ -1,0 +1,358 @@
+linux-kernel-headers (2.6.12.0-1.slind1) unstable; urgency=low
+
+  * Slind version.
+  * Do not build testsuite if we're cross-compiling.
+
+ -- Vartan Khachaturov <vartan.khachaturov@siemens.com>  Thu,  4 Aug 2005 15:09:54 +0400
+
+linux-kernel-headers (2.6.12.0-1) unstable; urgency=low
+
+  * GOTO Masanori <gotom@debian.org>
+
+    - New upstream release 2.6.12.  (Closes: #313275)
+    - autoconfs/*.h: Update.
+    - version.h: Update.
+
+    - testsuite/wait.c: Add testcase, to check sys/wait.h, asm/sigcontext.h
+      and so on for #313275.
+ 
+    - debian/patches/x86-64-long-long.patch: Remove to clean up because it's
+      not needed, the current testsuite passes without this patch.
+
+ -- GOTO Masanori <gotom@debian.org>  Thu, 16 Jun 2005 23:40:06 +0900
+
+linux-kernel-headers (2.6.12+0rc6-1) experimental; urgency=low
+
+  * GOTO Masanori <gotom@debian.org>
+
+    - New upstream release 2.6.12-rc6.
+    - autoconfs/*.h: Update.
+    - version.h: Update.
+
+    - debian/copyright: Change Copyright -> License.  (Closes: #290212)
+
+    - debian/patches/asm-parisc-unistd.patch: Add to make the macro -std=c99
+      friendly for asm-parisc/unistd.h.  It's already fixed in the latest
+      cvs.parisc-linux.org.  (Closes: #301073)
+
+    - debian/patches/asm-ppc64-swab64.patch: Add to enable
+      __arch__swab{16,32}, disable __arch__swab64 on ppc64.
+    - debian/patches/byteorder-const.patch: Move asm-ppc64 part to
+      asm-ppc64-swab64.patch.
+
+    - debian/patches/byteorder-inline.patch: Enclose __STRICT_ANSI__ and
+      __GNUC__ for __cpu_to[lb]e64p and __[lb]e64_to_cpup correctly.
+
+    - debian/patches/ioctl-typecheck.patch: Add to make impotent _IOC_TYPECHECK
+      checking macro for userland, to fix incompatible ioctl number in switch
+      case statement with g++ 3.4 and later.  Proposed patch by Jeremy
+      Nimmer <jwnimmer@alum.mit.edu>.  (Closes: #302478)
+    - debian/testsuite/ioctl.cc: Add ioctl userland breakage with g++ 3.4/4.0.
+      Patched by Jeremy Nimmer <jwnimmer@alum.mit.edu>.
+
+    - The previous release closed some bugs:
+      - include/asm-mips/reg.h was included.  (Closes: #266115)
+      - linux/llc.h __LLC_SOCK_SIZE__ value was fixed.  (Closes: #271355)
+      - linux/soundcard.h defines the correct AFMT_S16_NE value with 
+        considering big/little endian.  (Closes: #253568)
+
+    - debian/generate-asm.sh: Delete unneeded './' in bi-arch asm/*.h path.
+
+    - Bastian Blank <waldi@debian.org>:
+      - debian/rules: Add powerpc64 support.
+      - debian/generate-asm.sh: Likewise.
+
+    - Rafael Avila de Espindola <rafael.espindola@ic.unicamp.br>:
+      - debian/patches/asm-ppc64-memory.patch: Add to change inline ->
+        __inline__ for asm-ppc64/memory.h.  (Closes: #268078)
+
+ -- GOTO Masanori <gotom@debian.org>  Sat, 28 May 2005 00:00:34 +0900
+
+linux-kernel-headers (2.6.12+0rc5-1) experimental; urgency=low
+
+  * GOTO Masanori <gotom@debian.org>
+
+    - New upstream release 2.6.12-rc5.
+    - autoconfs/*.h: Update.
+    - version.h: Update.
+    - These patches are updated:
+      - debian/patches/asm-i386-byteorder-u64.patch: Update for the recent
+        tree.
+      - debian/patches/byteorder-const.patch: Likewise.
+      - debian/patches/videodev2-timeval.patch: Likewise.
+      - debian/patches/x86-64-long-long.patch: Likewise.
+      - debian/patches/alpha-ansi.patch: Update, move linux/byteorder/swab.h
+        part to byteorder.patch.
+      - debian/patches/linux-types-and-time.patch: Update, add __extension__
+        for linux/types.h.
+      - debian/patches/mips-ansi-fixes.patch: Update, drop addrspace.h part
+        because it does not have // any more.  Add __KERNEL__ into atomic.h.
+      - debian/patches/no-linux-compiler-h.patch: Update, add unexport
+        __builtin_warning for STRICT_ANSI.
+      - debian/patches/usb.patch: Fixes use of <linux/usb.h> from userspace.
+      - debian/patches/linux-netlink-compilation.patch: move __KERNEL__ in
+        linux/netlink.h in order to include in-kernel enum definition.
+
+    - These patches are removed:
+      - debian/patches/asm-mips-asm-and-unistd.patch: Remove, because it was
+        already applied in upstream.
+      - debian/patches/ioctl-signedness.patch: Likewise.
+      - debian/patches/linux-fb-compilefix.patch: Likewise.
+      - debian/patches/msqid64_ds-inconsistency.patch: Likewise.
+      - debian/patches/nbd.patch: Likewise.
+      - debian/patches/s390-asm-byteorder.patch: Likewise.
+      - debian/patches/sparc-asm-elf.patch: Likewise.
+      - debian/patches/toshiba.patch: Likewise.
+      - debian/patches/isdn.patch: Remove, because we don't need to apply it
+        nowadays.
+      - debian/patches/msdos-fs.patch: Likewise.
+
+    - These patches are added:
+      - debian/patches/linux-fs-types.patch: Add, to include linux/types.h
+        out of __KERNEL__ so that lkh linux/types.h has special hack for
+        passing non __KERNEL__ part.  This patch fixes testsuite/fs.c test.
+      - debian/patches/byteorder-inline: Add, to use __inline__ instead of
+        inline directly for -ansi.  Don't define __cpu_to[lb]64p and
+        __[lb]64_to_cpup under __STRICT_ANSI__.
+
+    - debian/copyright: Change upstream address slightly.
+    - debian/make-autoconfs.sh: Add ppc64 and m32r.  (Closes: #283597)
+    - debian/make-autoconfs.sh: Generate amd64 instead of x86_64.
+
+    - Add a patch for PPC32 <asm/unaligned.h> not to enclose
+      #ifdef __KERNEL__ on ppc. (Closes: #263348).
+      - asm-ppc-unaligned.patch
+
+ -- GOTO Masanori <gotom@debian.org>  Tue,  3 May 2005 11:55:21 +0900
+
+linux-kernel-headers (2.5.999-test7-bk-17) unstable; urgency=low
+
+  * GOTO Masanori <gotom@debian.org>
+
+    - Don't use the XSI:isms `-a' and `-o' in tests for 
+      debian/generate-asm.sh from David Weinehall <tao@debian.org>.
+      (Closes: #256502)
+    - Install i386 kernel headers into /usr/include/i386-linux on x86-64
+      from Andreas Jochens <aj@andaco.de>.  (Closes: #252720)
+    - Fix 64bit conversion makes weird behavior on s390 from
+      Bastian Blank <waldi@debian.org>.  (Closes: #259766)
+      - s390-asm-byteorder.patch
+    - Fix <asm/types.h> -ansi vs long long.  (Closes: #252651)
+      - asm-types-long-long.patch
+    - Revert x86-64 <asm/types.h> modification in x86-64-long-long.patch
+      because asm-types-long-long.patch fixes more appropriate method.
+
+ -- GOTO Masanori <gotom@debian.org>  Sun,  6 Jun 2004 05:35:11 +0900
+
+linux-kernel-headers (2.5.999-test7-bk-16) unstable; urgency=low
+
+  * Add a patch for MIPS <asm/asm.h> and <asm/unistd.h> from Thiemo Seufer
+    <ica2_ts@csv.ica.uni-stuttgart.de>.  (Closes: #234236)
+    - debian/patches/asm-mips-asm-and-unistd.patch
+  * Add a patch for x86-64 <asm/types.h> and <asm/byteorder.h> from
+    Kurt Roeckx <Q@ping.be>.  (Closes: #245387)
+    - debian/patches/x86-64-long-long.patch
+  * Add a patch for S390 <asm/types.h> to fix breakage when using gcc -ansi
+    and #include <sys/user.h>.  (Closes: #231972)
+    - debian/patches/s390-asm-types.patch
+  * debian/control: Update debhelper Build-Depends version to 4.1.0.
+  * debian/control: Change gotom's address.
+
+ -- GOTO Masanori <gotom@debian.org>  Tue, 11 May 2004 15:22:19 +0900
+
+linux-kernel-headers (2.5.999-test7-bk-15) unstable; urgency=low
+
+  * Add a patch for Sparc <asm/elf.h> from Ben Collins.
+  * Add a patch for Sparc <asm/fbio.h> from Clint Adams (Closes: #227957).
+
+ -- Daniel Jacobowitz <dan@debian.org>  Wed, 21 Jan 2004 09:50:38 -0500
+
+linux-kernel-headers (2.5.999-test7-bk-14) unstable; urgency=low
+
+  * Add a patch for <linux/toshiba.h> (Closes: #225428).
+    - debian/patches/toshiba.patch
+  * Add another HPPA patch (Closes: #226540) (I hope).
+    - debian/patches/hppa-atomic.patch
+
+ -- Daniel Jacobowitz <dan@debian.org>  Wed,  7 Jan 2004 13:14:48 -0500
+
+linux-kernel-headers (2.5.999-test7-bk-13) unstable; urgency=low
+
+  * Fix another build failure on Alpha.
+    - debian/patches/alpha-ansi.patch
+  * Fix another build failure on ia64.
+    - debian/patches/ia64-byteorder.patch
+
+ -- Daniel Jacobowitz <dan@debian.org>  Sun,  4 Jan 2004 18:06:31 -0500
+
+linux-kernel-headers (2.5.999-test7-bk-12) unstable; urgency=low
+
+  * Update padding fix for Alpha and s390x, which do not define _LP64
+    in GCC 3.3.
+    - debian/patches/asm-system-and-padding.patch
+  * Correct an #ifndef __KERNEL__ to #ifdef __KERNEL__ for HPPA.
+    - debian/patches/asm-system-and-padding.patch
+  * Disable use of intrinsics in byteorder.h from userspace to fix ia64
+    build failures (Closes: #225697).
+    - debian/patches/ia64-byteorder.patch
+  * Add amd64 support (Closes: #225599).
+  * Fix compilation of linux/nbd.h (Closes: #225594).
+  * Work around a bug in cdbs 0.4.14.
+  * Fix compilation of <linux/spinlock.h> by providing dummy lock types
+    (Closes: #223051).
+    - debian/patches/spinlock.patch
+    - testsuite/spinlock.c
+  * Fix compilation of <linux/isdn.h> by not including the FSM in userspace
+    (Closes: #224570).
+    - debian/patches/isdn.patch
+    - testsuite/isdn.c
+  * Fix compilation of <linux/usb.h> (Closes: #224360).
+    - debian/patches/usb.patch
+    - testsuite/usb.c
+  * Fix compilation of <linux/i2c-dev.h> (Closes: #220517).
+    - debian/patches/i2c-dev.patch
+    - testsuite/i2c.c
+
+ -- Daniel Jacobowitz <dan@debian.org>  Sat,  3 Jan 2004 13:39:22 -0500
+
+linux-kernel-headers (2.5.999-test7-bk-11) unstable; urgency=low
+
+  * Build fixes for mips, mipsel, sparc, and probably ia64 and alpha.
+    - debian/patches/mips-ansi-fixes.patch
+    - debian/patches/asm-system-and-padding.patch
+  * Fix a -Werror warning in the testsuite.
+    - testsuite/fs.c
+
+ -- Daniel Jacobowitz <dan@debian.org>  Tue, 30 Dec 2003 14:40:28 -0500
+
+linux-kernel-headers (2.5.999-test7-bk-10) unstable; urgency=low
+
+  * Daniel Jacobowitz <dan@debian.org>
+
+    - Add a testsuite.
+
+    - Resolve a conflict between <linux/compiler.h> and <sys/cdefs.h>
+      (Closes: #215337, #219664).
+      - debian/patches/no-linux-compiler-h.patch
+    - Let <linux/netlink.h> compile by moving some of <linux/uio.h> into
+      __KERNEL__ (Closes: #215937).
+      - debian/patches/linux-netlink-compilation.patch
+    - Fix a -W (-Wextra) warning with the ioctl type checking macros
+      (Closes: #219940, #220953).
+      - debian/patches/ioctl-signedness.patch
+    - Quiet #warning from <linux/list.h> for now.
+      - debian/patches/linux-list-quiet-warning.patch
+    - Fix conflict between <linux/time.h> and <time.h>, and other C++
+      namespace cleanliness problems
+      (Closes: #218438, #220232, #216921, #221438).
+      - debian/patches/linux-types-and-time.patch
+      - debian/patches/linux-types-ustat.h removed.
+    - Also export __kernel_dev_t for util-linux/cryptoloop (Closes: 220991).
+      - debian/patches/linux-types-and-time.patch
+    - Remove some useless __const__ markers from byteorder headers.
+      - debian/patches/byteorder-const.patch
+    - Add __extension__ to several ({ }) constructs to allow them with -ansi
+      (Closes: #203303).
+      - debian/patches/byteorder.patch
+    - Disable the contents of <asm-ia64/pal.h> in userspace (Closes: #220138).
+      - debian/patches/ia64-pal.patch
+    - Don't include unneeded mod_devicetable.h from linux/pci.h (Closes: #221543).
+      - debian/patches/linux-pci.patch
+    - Don't include buffer_head.h from linux/msdos_fs.h (Closes: #220331).
+      - debian/patches/msdos-fs.patch
+    - Suppress pedantic long long warnings for <linux/types.h>.
+      - debian/patches/linux-types-long-long.patch
+
+  * Jeff Bailey <jbailey@nisa.net>
+
+   - debian/control: Bump standards version to 3.6.1.
+     No changes required.
+
+ -- Daniel Jacobowitz <dan@debian.org>  Sat, 13 Dec 2003 16:13:20 -0500
+
+linux-kernel-headers (2.5.999-test7-bk-9) unstable; urgency=low
+
+  * Phil Blundell <pb@debian.org>
+
+    - debian/patches/arm-query-module.patch: New.  (Closes: #219769)
+
+ -- Philip Blundell <pb@nexus.co.uk>  Sun,  9 Nov 2003 00:21:32 +0000
+
+linux-kernel-headers (2.5.999-test7-bk-8) unstable; urgency=low
+
+  * Daniel Jacobowitz <dan@debian.org>
+
+    - debian/linux-kernel-headers.preinst: Check for asm-generic symlink
+      (Closes: #218516).
+    - debian/patches/linux-unistd-errno.patch: Don't say "extern int errno"
+      in userspace.
+    - debian/patches/linux-radix-tree.patch: Disable this header outside
+      __KERNEL__ (Closes: #219175).
+
+ -- Daniel Jacobowitz <dan@debian.org>  Wed,  5 Nov 2003 09:32:07 -0500
+
+linux-kernel-headers (2.5.999-test7-bk-7) unstable; urgency=low
+
+  * GOTO Masanori <gotom@debian.org>
+
+    - debian/patches/linux-fb-compilefix.patch: Compilation fix not to
+      export kernel internal structure and headers for <linux/fb.h>
+      and <linux/videodev.h>.  (Closes: #216921)
+
+  * Daniel Jacobowitz <dan@debian.org>
+
+    - debian/patches/ia64-modutils.patch: Add old module syscalls so that
+      glibc will build the modutils support functions on 2.4 kernels.
+    - Update linux-fb-compilefix.patch not to include <asm/io.h> either.
+    - Include pre-generated <asm/offsets.h> for HPPA (GDB needs it) and
+      ia64 (several kernel headers reference it).
+
+ -- Daniel Jacobowitz <dan@debian.org>  Wed,  5 Nov 2003 00:36:05 -0500
+
+linux-kernel-headers (2.5.999-test7-bk-6) unstable; urgency=low
+
+  * Add .cvsignore.
+  * Replace old versions of dvb-dev (Closes: #218387).
+  * Don't use __u64 in <asm-i386/byteorder.h> if it wasn't defined.
+  * Don't include <linux/config.h> in <asm-alpha/param.h> (Closes: #212101).
+  * Disable the guts of <linux/compiler.h> in userspace
+    (Closes: #218447, #218482).
+
+ -- Daniel Jacobowitz <dan@debian.org>  Sat,  1 Nov 2003 17:34:44 -0500
+
+linux-kernel-headers (2.5.999-test7-bk-5) unstable; urgency=low
+
+  * Conflict with libc6.1-dev, not libc6.1.  Oops.
+  * Change maintainer to debian-glibc.
+
+ -- Daniel Jacobowitz <dan@debian.org>  Mon, 27 Oct 2003 11:12:06 -0500
+
+linux-kernel-headers (2.5.999-test7-bk-4) unstable; urgency=low
+
+  * Don't define struct ustat in <linux/types.h>, since it conflicts with
+    <sys/ustat.h>.
+
+ -- Daniel Jacobowitz <dan@debian.org>  Sun, 26 Oct 2003 14:35:49 -0500
+
+linux-kernel-headers (2.5.999-test7-bk-3) unstable; urgency=low
+
+  * Don't define PT_IA64_UNWIND on IA64.  From Ian Wienand
+    <ianw@gelato.unsw.edu.au>.
+
+ -- Daniel Jacobowitz <dan@debian.org>  Fri, 24 Oct 2003 18:18:47 -0400
+
+linux-kernel-headers (2.5.999-test7-bk-2) unstable; urgency=low
+
+  * Use $(DEB_HOST_ARCH) to select autoconf.h template.
+
+ -- Daniel Jacobowitz <dan@debian.org>  Mon, 20 Oct 2003 21:53:52 -0400
+
+linux-kernel-headers (2.5.999-test7-bk-1) unstable; urgency=low
+
+  * Initial release.
+  * Include <linux/autoconf.h> templates for most architectures.
+  * Include a MIPS patch for msqid64_ds (part of bug #200215).
+  * Generate 64-bit wrappers for sparc64.
+
+ -- Daniel Jacobowitz <dan@debian.org>  Mon, 20 Oct 2003 12:53:48 -0400
+

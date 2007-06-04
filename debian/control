@@ -1,0 +1,23 @@
+Source: linux-kernel-headers
+Section: devel
+Priority: standard
+Maintainer: Alexander Shishkin <alexander.shishkin@siemens.com>
+Uploaders: Vartan Khachaturov <vartan.khachaturov@siemens.com>
+Build-Depends: debhelper (>= 4.1.0), cdbs
+Standards-Version: 3.6.1
+
+Package: linux-kernel-headers
+Architecture: any
+Conflicts: libc6-dev (<< 2.3.2.ds1-6), libc6.1-dev (<< 2.3.2.ds1-6), dvb-dev (<< 1.0.1-6)
+Replaces: libc6-dev (<< 2.3.2.ds1-6), libc6.1-dev (<< 2.3.2.ds1-6), dvb-dev (<< 1.0.1-6)
+Description: Linux Kernel Headers for development
+ This package provides headers from the Linux kernel.  These headers
+ are used by the installed headers for GNU glibc and other system libraries.
+
+Package: linux-kernel-headers-source
+Architecture: all
+Description: Linux Kernel Headers source package
+ This package provides source for linux-kernel-headers package suitable
+ for building binary packages. This is used for building cross-compilation
+ toolchains.
+

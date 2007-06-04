@@ -1,0 +1,24 @@
+#268078: Change inline -> __inline__.
+
+diff -ruN linux-2.6.0-test7-bk/debian/patches/ppc64-inline.patch linux-2.6.0-test7-bk-new/debian/patches/ppc64-inline.patch
+--- linux-2.6.0-test7-bk/debian/patches/ppc64-inline.patch	1970-01-01 00:00:00.000000000 +0000
++++ linux-2.6.0-test7-bk-new/debian/patches/ppc64-inline.patch	2004-08-22 15:17:45.724964280 +0000
+@@ -0,0 +1,18 @@
++diff -ruN include/asm-ppc64/memory.h include-new/asm-ppc64/memory.h
++--- include/asm-ppc64/memory.h	2004-08-22 15:17:06.035008296 +0000
+++++ include-new/asm-ppc64/memory.h	2004-08-22 15:12:50.302014528 +0000
++@@ -23,12 +23,12 @@
++ #define ISYNC_ON_SMP
++ #endif
++ 
++-static inline void eieio(void)
+++static __inline__ void eieio(void)
++ {
++ 	__asm__ __volatile__ ("eieio" : : : "memory");
++ }
++ 
++-static inline void isync(void)
+++static __inline__ void isync(void)
++ {
++ 	__asm__ __volatile__ ("isync" : : : "memory");
++ }

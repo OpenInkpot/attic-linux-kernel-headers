@@ -1,0 +1,144 @@
+diff -Nuar include.org/asm-arm/types.h include/asm-arm/types.h
+--- include.org/asm-arm/types.h	2003-10-16 00:09:54.000000000 +0900
++++ include/asm-arm/types.h	2004-07-31 22:59:03.000000000 +0900
+@@ -19,9 +19,9 @@
+ typedef __signed__ int __s32;
+ typedef unsigned int __u32;
+ 
+-#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+-typedef __signed__ long long __s64;
+-typedef unsigned long long __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long __u64;
+ #endif
+ 
+ #endif /* __ASSEMBLY__ */
+diff -Nuar include.org/asm-i386/types.h include/asm-i386/types.h
+--- include.org/asm-i386/types.h	2003-10-16 00:13:05.000000000 +0900
++++ include/asm-i386/types.h	2004-07-31 22:59:43.000000000 +0900
+@@ -19,9 +19,9 @@
+ typedef __signed__ int __s32;
+ typedef unsigned int __u32;
+ 
+-#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+-typedef __signed__ long long __s64;
+-typedef unsigned long long __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long __u64;
+ #endif
+ 
+ #endif /* __ASSEMBLY__ */
+diff -Nuar include.org/asm-m68k/types.h include/asm-m68k/types.h
+--- include.org/asm-m68k/types.h	2003-10-16 00:09:42.000000000 +0900
++++ include/asm-m68k/types.h	2004-07-31 23:00:13.000000000 +0900
+@@ -27,9 +27,9 @@
+ typedef __signed__ int __s32;
+ typedef unsigned int __u32;
+ 
+-#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+-typedef __signed__ long long __s64;
+-typedef unsigned long long __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long __u64;
+ #endif
+ 
+ #endif /* __ASSEMBLY__ */
+diff -Nuar include.org/asm-mips/types.h include/asm-mips/types.h
+--- include.org/asm-mips/types.h	2003-10-16 00:10:22.000000000 +0900
++++ include/asm-mips/types.h	2004-07-31 23:00:34.000000000 +0900
+@@ -41,9 +41,9 @@
+ 
+ #else
+ 
+-#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+-typedef __signed__ long long __s64;
+-typedef unsigned long long __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long __u64;
+ #endif
+ 
+ #endif
+diff -Nuar include.org/asm-parisc/types.h include/asm-parisc/types.h
+--- include.org/asm-parisc/types.h	2003-10-16 00:10:33.000000000 +0900
++++ include/asm-parisc/types.h	2004-07-31 23:01:17.000000000 +0900
+@@ -19,9 +19,9 @@
+ typedef __signed__ int __s32;
+ typedef unsigned int __u32;
+ 
+-#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+-typedef __signed__ long long __s64;
+-typedef unsigned long long __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long __u64;
+ #endif
+ 
+ #endif /* __ASSEMBLY__ */
+diff -Nuar include.org/asm-ppc/types.h include/asm-ppc/types.h
+--- include.org/asm-ppc/types.h	2003-10-16 00:14:24.000000000 +0900
++++ include/asm-ppc/types.h	2004-07-31 23:01:41.000000000 +0900
+@@ -12,9 +12,9 @@
+ typedef __signed__ int __s32;
+ typedef unsigned int __u32;
+ 
+-#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+-typedef __signed__ long long __s64;
+-typedef unsigned long long __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long __u64;
+ #endif
+ 
+ typedef struct {
+diff -Nuar include.org/asm-sh/types.h include/asm-sh/types.h
+--- include.org/asm-sh/types.h	2003-10-16 00:14:30.000000000 +0900
++++ include/asm-sh/types.h	2004-07-31 23:02:59.000000000 +0900
+@@ -19,9 +19,9 @@
+ typedef __signed__ int __s32;
+ typedef unsigned int __u32;
+ 
+-#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+-typedef __signed__ long long __s64;
+-typedef unsigned long long __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long __u64;
+ #endif
+ 
+ #endif /* __ASSEMBLY__ */
+diff -Nuar include.org/asm-sparc/types.h include/asm-sparc/types.h
+--- include.org/asm-sparc/types.h	2004-07-19 15:47:45.000000000 +0900
++++ include/asm-sparc/types.h	2004-07-31 23:03:42.000000000 +0900
+@@ -28,9 +28,9 @@
+ typedef __signed__ int __s32;
+ typedef unsigned int __u32;
+ 
+-#ifndef __STRICT_ANSI__
+-typedef __signed__ long long __s64;
+-typedef unsigned long long __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long __u64;
+ #endif
+ 
+ #endif /* __ASSEMBLY__ */
+diff -Nuar include.org/asm-x86_64/types.h include/asm-x86_64/types.h
+--- include.org/asm-x86_64/types.h	2004-07-31 23:11:07.000000000 +0900
++++ include/asm-x86_64/types.h	2004-07-31 23:10:40.000000000 +0900
+@@ -19,8 +19,10 @@
+ typedef __signed__ int __s32;
+ typedef unsigned int __u32;
+ 
+-typedef __signed__ long long __s64;
+-typedef unsigned long long  __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long  __u64;
++#endif
+ 
+ #endif /* __ASSEMBLY__ */
+ 

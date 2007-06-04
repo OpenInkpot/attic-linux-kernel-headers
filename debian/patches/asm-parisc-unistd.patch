@@ -1,0 +1,23 @@
+Make the macro -std=c99 friendly for asm-parisc/unistd.h.
+It's already fixed in the latest cvs.parisc-linux.org.
+
+===================================================================
+RCS file: /var/lib/cvs/linux-2.6/include/asm-parisc/unistd.h,v
+retrieving revision 1.15
+retrieving revision 1.16
+diff -u -r1.15 -r1.16
+--- linux-2.6/include/asm-parisc/unistd.h	2005/03/18 13:17:43	1.15
++++ linux-2.6/include/asm-parisc/unistd.h	2005/03/23 17:13:38	1.16
+@@ -807,10 +807,10 @@
+ #define K_INLINE_SYSCALL(name, nr, args...)	({			\
+ 	long __sys_res;							\
+ 	{								\
+-		register unsigned long __res asm("r28");		\
++		register unsigned long __res __asm__("r28");		\
+ 		K_LOAD_ARGS_##nr(args)					\
+ 		/* FIXME: HACK stw/ldw r19 around syscall */		\
+-		asm volatile(						\
++		__asm__ volatile(					\
+ 			K_STW_ASM_PIC					\
+ 			"	ble  0x100(%%sr2, %%r0)\n"		\
+ 			"	ldi %1, %%r20\n"			\

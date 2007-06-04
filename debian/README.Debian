@@ -1,0 +1,13 @@
+This package is a snapshot of the headers shipped with a particular version
+of the Linux kernel.  A couple things to keep in mind about it:
+
+  - These headers can not be used to build kernel modules.  They're only
+    for userspace use.
+  - These headers do not need to match your running kernel.  They're only
+    for the use of GNU libc and other C libraries.
+  - These headers should generally not be included directly.  It's not a bug
+    if you include one directly and something breaks.
+
+Some day, the hope is to replace these with a separate copy of "ABI headers"
+describing only the kernel's exposed interface.  Those headers will probably
+be directly usable, as these are not.

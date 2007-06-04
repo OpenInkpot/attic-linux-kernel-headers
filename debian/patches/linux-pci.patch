@@ -1,0 +1,14 @@
+Included via <sys/pci.h>.
+
+--- include/linux/pci.h.orig	2003-11-23 15:54:10.000000000 -0500
++++ include/linux/pci.h	2003-11-23 15:54:19.000000000 -0500
+@@ -17,7 +17,9 @@
+ #ifndef LINUX_PCI_H
+ #define LINUX_PCI_H
+ 
++#ifdef __KERNEL__
+ #include <linux/mod_devicetable.h>
++#endif
+ 
+ /*
+  * Under PCI, each device has 256 bytes of configuration address space,

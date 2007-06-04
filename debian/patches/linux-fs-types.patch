@@ -1,0 +1,14 @@
+Include linux/types.h out of __KERNEL__ so that lkh linux/types.h
+has special hack for passing non __KERNEL__ part.
+This patch fixes testsuite/fs.c test.
+
+--- ../include.orig/linux/fs.h	2005-04-21 09:03:16.000000000 +0900
++++ include/linux/fs.h	2005-05-05 17:06:11.546297175 +0900
+@@ -9,6 +9,7 @@
+ #include <linux/config.h>
+ #include <linux/limits.h>
+ #include <linux/ioctl.h>
++#include <linux/types.h>
+ 
+ /*
+  * It's silly to have NR_OPEN bigger than NR_FILE, but you can change

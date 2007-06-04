@@ -1,0 +1,133 @@
+--- include/asm-cris/ioctl.h~	2005-05-25 12:31:20.000000000 +0900
++++ include/asm-cris/ioctl.h	2005-06-03 10:31:42.183033355 +0900
+@@ -53,12 +53,16 @@
+ 	 ((nr)   << _IOC_NRSHIFT) | \
+ 	 ((size) << _IOC_SIZESHIFT))
+ 
++#ifdef __KERNEL__
+ /* provoke compile error for invalid uses of size argument */
+ extern int __invalid_size_argument_for_IOC;
+ #define _IOC_TYPECHECK(t) \
+ 	((sizeof(t) == sizeof(t[1]) && \
+ 	  sizeof(t) < (1 << _IOC_SIZEBITS)) ? \
+ 	  sizeof(t) : __invalid_size_argument_for_IOC)
++#else
++#define _IOC_TYPECHECK(t) (sizeof(t))
++#endif
+ 
+ /* used to create numbers */
+ #define _IO(type,nr)		_IOC(_IOC_NONE,(type),(nr),0)
+--- include/asm-i386/ioctl.h~	2005-05-25 12:31:20.000000000 +0900
++++ include/asm-i386/ioctl.h	2005-06-03 10:32:02.445331679 +0900
+@@ -52,12 +52,16 @@
+ 	 ((nr)   << _IOC_NRSHIFT) | \
+ 	 ((size) << _IOC_SIZESHIFT))
+ 
++#ifdef __KERNEL__
+ /* provoke compile error for invalid uses of size argument */
+ extern unsigned int __invalid_size_argument_for_IOC;
+ #define _IOC_TYPECHECK(t) \
+ 	((sizeof(t) == sizeof(t[1]) && \
+ 	  sizeof(t) < (1 << _IOC_SIZEBITS)) ? \
+ 	  sizeof(t) : __invalid_size_argument_for_IOC)
++#else
++#define _IOC_TYPECHECK(t) (sizeof(t))
++#endif
+ 
+ /* used to create numbers */
+ #define _IO(type,nr)		_IOC(_IOC_NONE,(type),(nr),0)
+--- include/asm-mips/ioctl.h~	2005-05-25 12:31:20.000000000 +0900
++++ include/asm-mips/ioctl.h	2005-06-03 10:32:25.846211467 +0900
+@@ -65,12 +65,16 @@
+ 	 ((nr)   << _IOC_NRSHIFT) | \
+ 	 ((size) << _IOC_SIZESHIFT))
+ 
++#ifdef __KERNEL__
+ /* provoke compile error for invalid uses of size argument */
+ extern unsigned int __invalid_size_argument_for_IOC;
+ #define _IOC_TYPECHECK(t) \
+ 	((sizeof(t) == sizeof(t[1]) && \
+ 	  sizeof(t) < (1 << _IOC_SIZEBITS)) ? \
+ 	  sizeof(t) : __invalid_size_argument_for_IOC)
++#else
++#define _IOC_TYPECHECK(t) (sizeof(t))
++#endif
+ 
+ /* used to create numbers */
+ #define _IO(type,nr)		_IOC(_IOC_NONE,(type),(nr),0)
+--- include/asm-parisc/ioctl.h~	2005-05-25 12:31:20.000000000 +0900
++++ include/asm-parisc/ioctl.h	2005-06-03 10:32:57.800950606 +0900
+@@ -60,12 +60,16 @@
+ 	 ((nr)   << _IOC_NRSHIFT) | \
+ 	 ((size) << _IOC_SIZESHIFT))
+ 
++#ifdef __KERNEL__
+ /* provoke compile error for invalid uses of size argument */
+ extern unsigned int __invalid_size_argument_for_IOC;
+ #define _IOC_TYPECHECK(t) \
+ 	((sizeof(t) == sizeof(t[1]) && \
+ 	  sizeof(t) < (1 << _IOC_SIZEBITS)) ? \
+ 	  sizeof(t) : __invalid_size_argument_for_IOC)
++#else
++#define _IOC_TYPECHECK(t) (sizeof(t))
++#endif
+ 
+ /* used to create numbers */
+ #define _IO(type,nr)		_IOC(_IOC_NONE,(type),(nr),0)
+--- include/asm-ppc/ioctl.h~	2005-05-25 12:31:20.000000000 +0900
++++ include/asm-ppc/ioctl.h	2005-06-03 10:33:19.391071705 +0900
+@@ -37,12 +37,16 @@
+ 	 ((nr)   << _IOC_NRSHIFT) | \
+ 	 ((size) << _IOC_SIZESHIFT))
+ 
++#ifdef __KERNEL__
+ /* provoke compile error for invalid uses of size argument */
+ extern unsigned int __invalid_size_argument_for_IOC;
+ #define _IOC_TYPECHECK(t) \
+ 	((sizeof(t) == sizeof(t[1]) && \
+ 	  sizeof(t) < (1 << _IOC_SIZEBITS)) ? \
+ 	  sizeof(t) : __invalid_size_argument_for_IOC)
++#else
++#define _IOC_TYPECHECK(t) (sizeof(t))
++#endif
+ 
+ /* used to create numbers */
+ #define _IO(type,nr)		_IOC(_IOC_NONE,(type),(nr),0)
+--- include/asm-ppc64/ioctl.h~	2005-05-25 12:31:20.000000000 +0900
++++ include/asm-ppc64/ioctl.h	2005-06-03 10:33:36.177833268 +0900
+@@ -42,12 +42,16 @@
+ 	 ((nr)   << _IOC_NRSHIFT) | \
+ 	 ((size) << _IOC_SIZESHIFT))
+ 
++#ifdef __KERNEL__
+ /* provoke compile error for invalid uses of size argument */
+ extern unsigned int __invalid_size_argument_for_IOC;
+ #define _IOC_TYPECHECK(t) \
+        ((sizeof(t) == sizeof(t[1]) && \
+          sizeof(t) < (1 << _IOC_SIZEBITS)) ? \
+          sizeof(t) : __invalid_size_argument_for_IOC)
++#else
++#define _IOC_TYPECHECK(t) (sizeof(t))
++#endif
+ 
+ /* used to create numbers */
+ #define _IO(type,nr)		_IOC(_IOC_NONE,(type),(nr),0)
+--- include/asm-s390/ioctl.h~	2005-05-25 12:31:20.000000000 +0900
++++ include/asm-s390/ioctl.h	2005-06-03 10:33:55.849210144 +0900
+@@ -55,12 +55,16 @@
+ 	 ((nr)   << _IOC_NRSHIFT) | \
+ 	 ((size) << _IOC_SIZESHIFT))
+ 
++#ifdef __KERNEL__
+ /* provoke compile error for invalid uses of size argument */
+ extern unsigned long __invalid_size_argument_for_IOC;
+ #define _IOC_TYPECHECK(t) \
+ 	((sizeof(t) == sizeof(t[1]) && \
+ 	  sizeof(t) < (1 << _IOC_SIZEBITS)) ? \
+ 	  sizeof(t) : __invalid_size_argument_for_IOC)
++#else
++#define _IOC_TYPECHECK(t) (sizeof(t))
++#endif
+ 
+ /* used to create numbers */
+ #define _IO(type,nr)		_IOC(_IOC_NONE,(type),(nr),0)

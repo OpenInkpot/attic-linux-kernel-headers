@@ -1,0 +1,18 @@
+fix #231972 on s390.
+
+diff -Nuar include.org/asm-s390/types.h include/asm-s390/types.h
+--- include.org/asm-s390/types.h	2003-10-16 00:12:23.000000000 +0900
++++ include/asm-s390/types.h	2004-06-01 03:56:53.000000000 +0900
+@@ -28,9 +28,9 @@
+ typedef unsigned int __u32;
+ 
+ #ifndef __s390x__
+-#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+-typedef __signed__ long long __s64;
+-typedef unsigned long long __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long __u64;
+ #endif
+ #else /* __s390x__ */
+ typedef __signed__ long __s64;
