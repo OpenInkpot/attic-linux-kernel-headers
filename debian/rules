@@ -19,6 +19,7 @@ srcpkgdir = debian/$(srcpkg)
 
 kernel_arch := $(DEB_HOST_ARCH_CPU)
 kernel_arch := $(patsubst powerpc,ppc,$(kernel_arch))
+kernel_arch := $(patsubst sh4%,sh,$(kernel_arch))
 kernel_arch := $(patsubst hppa,parisc,$(kernel_arch))
 kernel_arch := $(patsubst mipsel,mips,$(kernel_arch))
 kernel_arch := $(patsubst amd64,x86_64,$(kernel_arch))
@@ -44,7 +45,11 @@ else
 	cp -a include/asm-$(kernel_arch) $(includedir)/asm
 endif
 
+ifeq (sh,$(kernel_arch))
+	cp autoconfs/autoconf-$(kernel_arch).h $(includedir)/linux/autoconf.h
+else
 	cp autoconfs/autoconf-$(DEB_HOST_ARCH_CPU).h $(includedir)/linux/autoconf.h
+endif
 
 ifeq ($(kernel_arch),x86_64)
 	# install the i386 kernel headers in /usr/include/i386-linux
