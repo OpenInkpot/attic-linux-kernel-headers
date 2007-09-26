@@ -50,7 +50,6 @@ ifeq (sh4a,$(DEB_HOST_ARCH_CPU))
 	sed -i -e 's,\(^#define PAGE_SHIFT\).*$$,\1 13,' \
 		$(includedir)/asm/page.h
 endif
-endif
 
 ifeq ($(kernel_arch),arm)
 	# ARM needs some extra symlinks.
