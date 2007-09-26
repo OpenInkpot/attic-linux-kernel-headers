@@ -1,38 +1,41 @@
-Update 2005-05-05 gotom, move __KERNEL__ in linux/netlink.h in order to
-include in-kernel enum definition.
-
---- include/linux/uio.h.t	2003-11-21 18:27:56.000000000 -0500
-+++ include/linux/uio.h	2003-11-21 18:28:23.000000000 -0500
-@@ -35,6 +35,8 @@
-                                 /* Beg pardon: BSD has 1024 --ANK */
- #endif
- 
-+#ifdef __KERNEL__
-+
- /*
-  * Total number of bytes covered by an iovec.
-  *
-@@ -55,3 +57,5 @@
- unsigned long iov_shorten(struct iovec *iov, unsigned long nr_segs, size_t to);
- 
- #endif
-+
-+#endif
---- include.orig/linux/netlink.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/linux/netlink.h	2005-05-05 22:34:40.546572593 +0900
-@@ -91,14 +91,13 @@
- };
+Index: include/linux/netlink.h
+===================================================================
+--- include/linux/netlink.h.orig	2006-06-10 00:44:04.000000000 -0400
++++ include/linux/netlink.h	2006-06-10 01:21:41.412266032 -0400
+@@ -106,6 +106,8 @@
  
  #define NET_MAJOR 36		/* Major 36 is reserved for networking 						*/
-+#ifdef __KERNEL__
  
++#ifdef __KERNEL__
++
  enum {
  	NETLINK_UNCONNECTED = 0,
  	NETLINK_CONNECTED,
- };
+@@ -130,8 +132,6 @@
+ #define NLA_ALIGN(len)		(((len) + NLA_ALIGNTO - 1) & ~(NLA_ALIGNTO - 1))
+ #define NLA_HDRLEN		((int) NLA_ALIGN(sizeof(struct nlattr)))
  
 -#ifdef __KERNEL__
 -
  #include <linux/capability.h>
  #include <linux/skbuff.h>
  
+Index: include/linux/uio.h
+===================================================================
+--- include/linux/uio.h.orig	2006-06-10 01:22:10.000000000 -0400
++++ include/linux/uio.h	2006-06-10 01:23:20.222133536 -0400
+@@ -30,8 +30,6 @@
+ 	size_t iov_len;
+ };
+ 
+-#endif
+-
+ /*
+  *	UIO_MAXIOV shall be at least 16 1003.1g (5.4.1.1)
+  */
+@@ -64,3 +62,5 @@
+ unsigned long iov_shorten(struct iovec *iov, unsigned long nr_segs, size_t to);
+ 
+ #endif
++
++#endif

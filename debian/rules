@@ -10,7 +10,7 @@ DEB_INDEP_PACKAGES = linux-kernel-headers-source
 include /usr/share/cdbs/1/rules/debhelper.mk
 
 # Simple patches in debian/patches.
-include /usr/share/cdbs/1/rules/simple-patchsys.mk
+include /usr/share/cdbs/1/rules/patchsys-quilt.mk
 
 pkgdir = debian/$(DEB_ARCH_PACKAGES)
 includedir = $(pkgdir)/usr/include
@@ -18,8 +18,8 @@ srcpkg = $(DEB_INDEP_PACKAGES)
 srcpkgdir = debian/$(srcpkg)
 
 kernel_arch := $(DEB_HOST_ARCH_CPU)
-kernel_arch := $(patsubst powerpc,ppc,$(kernel_arch))
 kernel_arch := $(patsubst sh4%,sh,$(kernel_arch))
+kernel_arch := $(patsubst armeb,arm,$(kernel_arch))
 kernel_arch := $(patsubst hppa,parisc,$(kernel_arch))
 kernel_arch := $(patsubst mipsel,mips,$(kernel_arch))
 kernel_arch := $(patsubst amd64,x86_64,$(kernel_arch))
@@ -39,28 +39,17 @@ stamp-lkh-install: build
 	install -d $(includedir)
 	install -d $(includedir)/linux
 
-ifneq (,$(findstring $(DEB_HOST_ARCH), powerpc sparc))
-	sh debian/generate-asm.sh $(DEB_HOST_ARCH) include $(includedir)
+ifneq (,$(findstring $(DEB_HOST_ARCH), amd64 i386 sparc))
+	sh debian/generate-asm.sh $(DEB_HOST_ARCH) include $(includedir) autoconfs
 else
 	cp -a include/asm-$(kernel_arch) $(includedir)/asm
 endif
 
-ifeq (sh,$(kernel_arch))
 	cp autoconfs/autoconf-$(kernel_arch).h $(includedir)/linux/autoconf.h
-  ifeq (sh4a,$(DEB_HOST_ARCH_CPU))
+ifeq (sh4a,$(DEB_HOST_ARCH_CPU))
 	sed -i -e 's,\(^#define PAGE_SHIFT\).*$$,\1 13,' \
 		$(includedir)/asm/page.h
-  endif
-else
-	cp autoconfs/autoconf-$(DEB_HOST_ARCH_CPU).h $(includedir)/linux/autoconf.h
 endif
-
-ifeq ($(kernel_arch),x86_64)
-	# install the i386 kernel headers in /usr/include/i386-linux
-	mkdir -p $(includedir)/i386-linux
-	ln -s ../linux $(includedir)/i386-linux
-	ln -s ../asm-generic $(includedir)/i386-linux
-	cp -a include/asm-i386 $(includedir)/i386-linux/asm
 endif
 
 ifeq ($(kernel_arch),arm)

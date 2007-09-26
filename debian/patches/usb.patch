@@ -1,5 +1,9 @@
 Fixes use of <linux/usb.h> from userspace.
 
+Update 2005-07-22 gotom, usb_ch9.h part is removed because it's
+already applied to upstream.  New usb_ch9.h part is introduced
+because the latest header has another broken usage.
+
 Update 2005-05-05 gotom, usb_ch9.h should include linux/types.h
 instead of asm/types.h due to install __le16.
 
@@ -21,25 +25,22 @@ instead of asm/types.h due to install __le16.
  
  struct usb_device;
  struct usb_driver;
---- include.orig/linux/usb_ch9.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/linux/usb_ch9.h	2005-05-05 17:14:54.565648303 +0900
-@@ -16,7 +16,7 @@
- #ifndef __LINUX_USB_CH9_H
- #define __LINUX_USB_CH9_H
+--- include/linux/usb_ch9.h	2005-07-13 13:46:46.000000000 +0900
++++ include/linux/usb_ch9.h.gotom	2005-07-22 15:35:20.694654077 +0900
+@@ -401,7 +401,6 @@
  
--#include <asm/types.h>		/* __u8 etc */
-+#include <linux/types.h>	/* __u8 etc */
+ 	__u8  tTKID[3];
+ 	__u8  bReserved;
+-	__u8  bKeyData[0];
+ };
  
  /*-------------------------------------------------------------------------*/
+@@ -526,7 +525,7 @@
+ 	USB_SPEED_UNKNOWN = 0,			/* enumerating */
+ 	USB_SPEED_LOW, USB_SPEED_FULL,		/* usb 1.1 */
+ 	USB_SPEED_HIGH,				/* usb 2.0 */
+-	USB_SPEED_VARIABLE,			/* wireless (usb 2.5) */
++	USB_SPEED_VARIABLE			/* wireless (usb 2.5) */
+ };
  
-@@ -268,8 +268,8 @@
- 	__le16 wMaxPacketSize;
- 	__u8  bInterval;
- 
--	// NOTE:  these two are _only_ in audio endpoints.
--	// use USB_DT_ENDPOINT*_SIZE in bLength, not sizeof.
-+	/* NOTE:  these two are _only_ in audio endpoints. */
-+	/* use USB_DT_ENDPOINT*_SIZE in bLength, not sizeof. */
- 	__u8  bRefresh;
- 	__u8  bSynchAddress;
- } __attribute__ ((packed));
+ enum usb_device_state {

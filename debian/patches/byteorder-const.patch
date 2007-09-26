@@ -1,8 +1,14 @@
-Update 2005-05-27 gotom.
-Disable asm-ppc64/byteorder.h patch, move it to asm-ppc64-swab64.h
+Update 2005-07-22 gotom.
+Enable asm-ppc64/byteorder.h patch again, moved from asm-ppc64-swab64.patch.
+Remove linux/byteorder/swabb.h part, it's already applied to upstream.
 
---- include.orig/asm-alpha/byteorder.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/asm-alpha/byteorder.h	2005-05-27 21:39:42.537551683 +0900
+Update 2005-05-27 gotom.
+Disable asm-ppc64/byteorder.h patch, move it to asm-ppc64-swab64.patch.
+
+Index: include/asm-alpha/byteorder.h
+===================================================================
+--- include/asm-alpha/byteorder.h.orig	2006-09-19 23:42:06.000000000 -0400
++++ include/asm-alpha/byteorder.h	2006-10-07 09:02:17.366543291 -0400
 @@ -7,7 +7,7 @@
  
  #ifdef __GNUC__
@@ -12,27 +18,10 @@ Disable asm-ppc64/byteorder.h patch, move it to asm-ppc64-swab64.h
  {
  	/*
  	 * Unfortunately, we can't use the 6 instruction sequence
---- include.orig/asm-cris/arch-v10/byteorder.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/asm-cris/arch-v10/byteorder.h	2005-05-27 21:40:50.951268236 +0900
-@@ -9,14 +9,14 @@
-  * them together into ntohl etc.
-  */
- 
--extern __inline__ __attribute_const__ __u32 ___arch__swab32(__u32 x)
-+extern __inline__ __u32 ___arch__swab32(__u32 x)
- {
- 	__asm__ ("swapwb %0" : "=r" (x) : "0" (x));
-   
- 	return(x);
- }
- 
--extern __inline__ __attribute_const__ __u16 ___arch__swab16(__u16 x)
-+extern __inline__ __u16 ___arch__swab16(__u16 x)
- {
- 	__asm__ ("swapb %0" : "=r" (x) : "0" (x));
- 	
---- include.orig/asm-m68k/byteorder.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/asm-m68k/byteorder.h	2005-05-27 21:42:28.255064498 +0900
+Index: include/asm-m68k/byteorder.h
+===================================================================
+--- include/asm-m68k/byteorder.h.orig	2006-09-19 23:42:06.000000000 -0400
++++ include/asm-m68k/byteorder.h	2006-10-07 09:02:17.370543699 -0400
 @@ -6,7 +6,7 @@
  
  #ifdef __GNUC__
@@ -42,8 +31,10 @@ Disable asm-ppc64/byteorder.h patch, move it to asm-ppc64-swab64.h
  {
  	__asm__("rolw #8,%0; swap %0; rolw #8,%0" : "=d" (val) : "0" (val));
  	return val;
---- include.orig/asm-parisc/byteorder.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/asm-parisc/byteorder.h	2005-05-27 21:43:25.651276042 +0900
+Index: include/asm-parisc/byteorder.h
+===================================================================
+--- include/asm-parisc/byteorder.h.orig	2006-09-19 23:42:06.000000000 -0400
++++ include/asm-parisc/byteorder.h	2006-10-07 09:02:17.370543699 -0400
 @@ -6,7 +6,7 @@
  
  #ifdef __GNUC__
@@ -89,57 +80,10 @@ Disable asm-ppc64/byteorder.h patch, move it to asm-ppc64-swab64.h
  {
  	__u32 t1 = ___arch__swab32((__u32) x);
  	__u32 t2 = ___arch__swab32((__u32) (x >> 32));
---- include.orig/asm-ppc/byteorder.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/asm-ppc/byteorder.h	2005-05-27 21:43:47.623294516 +0900
-@@ -33,7 +33,7 @@
- 	__asm__ __volatile__ ("stwbrx %1,0,%2" : "=m" (*addr) : "r" (val), "r" (addr));
- }
- 
--static __inline__ __attribute_const__ __u16 ___arch__swab16(__u16 value)
-+static __inline__ __u16 ___arch__swab16(__u16 value)
- {
- 	__u16 result;
- 
-@@ -41,7 +41,7 @@
- 	return result;
- }
- 
--static __inline__ __attribute_const__ __u32 ___arch__swab32(__u32 value)
-+static __inline__ __u32 ___arch__swab32(__u32 value)
- {
- 	__u32 result;
- 
-#--- include.orig/asm-ppc64/byteorder.h	2005-04-21 09:03:16.000000000 +0900
-#+++ include/asm-ppc64/byteorder.h	2005-05-27 21:44:08.589474205 +0900
-#@@ -41,7 +41,7 @@
-# }
-# 
-# #if 0
-#-static __inline__ __attribute_const__ __u16 ___arch__swab16(__u16 value)
-#+static __inline__ __u16 ___arch__swab16(__u16 value)
-# {
-# 	__u16 result;
-# 
-#@@ -51,7 +51,7 @@
-# 	return result;
-# }
-# 
-#-static __inline__ __attribute_const__ __u32 ___arch__swab32(__u32 value)
-#+static __inline__ __u32 ___arch__swab32(__u32 value)
-# {
-# 	__u32 result;
-# 
-#@@ -63,7 +63,7 @@
-# 	return result;
-# }
-# 
-#-static __inline__ __attribute_const__ __u64 ___arch__swab64(__u64 value)
-#+static __inline__ __u64 ___arch__swab64(__u64 value)
-# {
-# 	__u64 result;
-# #error implement me
---- include.orig/asm-sh/byteorder.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/asm-sh/byteorder.h	2005-05-27 21:44:57.552894641 +0900
+Index: include/asm-sh/byteorder.h
+===================================================================
+--- include/asm-sh/byteorder.h.orig	2006-09-19 23:42:06.000000000 -0400
++++ include/asm-sh/byteorder.h	2006-10-07 09:02:17.370543699 -0400
 @@ -8,7 +8,7 @@
  #include <asm/types.h>
  #include <linux/compiler.h>
@@ -158,28 +102,10 @@ Disable asm-ppc64/byteorder.h patch, move it to asm-ppc64-swab64.h
  {
  	__asm__("swap.b %0, %0"
  		: "=r" (x)
---- include.orig/asm-sh64/byteorder.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/asm-sh64/byteorder.h	2005-05-27 21:50:48.279743143 +0900
-@@ -14,7 +14,7 @@
- 
- #include <asm/types.h>
- 
--static __inline__ __const__ __u32 ___arch__swab32(__u32 x)
-+static __inline__ __u32 ___arch__swab32(__u32 x)
- {
- 	__asm__("byterev	%0, %0\n\t"
- 		"shari		%0, 32, %0"
-@@ -23,7 +23,7 @@
- 	return x;
- }
- 
--static __inline__ __const__ __u16 ___arch__swab16(__u16 x)
-+static __inline__ __u16 ___arch__swab16(__u16 x)
- {
- 	__asm__("byterev	%0, %0\n\t"
- 		"shari		%0, 48, %0"
---- include.orig/asm-v850/byteorder.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/asm-v850/byteorder.h	2005-05-27 21:45:51.315669274 +0900
+Index: include/asm-v850/byteorder.h
+===================================================================
+--- include/asm-v850/byteorder.h.orig	2006-09-19 23:42:06.000000000 -0400
++++ include/asm-v850/byteorder.h	2006-10-07 09:02:17.374544106 -0400
 @@ -19,14 +19,14 @@
  
  #ifdef __GNUC__
@@ -197,8 +123,10 @@ Disable asm-ppc64/byteorder.h patch, move it to asm-ppc64-swab64.h
  {
  	__u16 res;
  	__asm__ ("bsh %1, %0" : "=r" (res) : "r" (half_word));
---- include.orig/asm-x86_64/byteorder.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/asm-x86_64/byteorder.h	2005-05-27 22:06:28.905489053 +0900
+Index: include/asm-x86_64/byteorder.h
+===================================================================
+--- include/asm-x86_64/byteorder.h.orig	2006-09-19 23:42:06.000000000 -0400
++++ include/asm-x86_64/byteorder.h	2006-10-07 09:02:17.374544106 -0400
 @@ -6,13 +6,13 @@
  
  #ifdef __GNUC__
@@ -215,8 +143,10 @@ Disable asm-ppc64/byteorder.h patch, move it to asm-ppc64-swab64.h
  {
  	__asm__("bswapl %0" : "=r" (x) : "0" (x));
  	return x;
---- include.orig/linux/byteorder/swab.h	2005-05-27 22:05:04.347036459 +0900
-+++ include/linux/byteorder/swab.h	2005-05-27 22:06:52.423277697 +0900
+Index: include/linux/byteorder/swab.h
+===================================================================
+--- include/linux/byteorder/swab.h.orig	2006-10-07 09:02:17.062512303 -0400
++++ include/linux/byteorder/swab.h	2006-10-07 09:02:17.374544106 -0400
 @@ -130,7 +130,7 @@
  #endif /* OPTIMIZE */
  
@@ -244,23 +174,68 @@ Disable asm-ppc64/byteorder.h patch, move it to asm-ppc64-swab64.h
  {
  #  ifdef __SWAB_64_THRU_32__
  	__u32 h = x >> 32;
---- include.orig/linux/byteorder/swabb.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/linux/byteorder/swabb.h	2005-05-27 22:07:19.637561723 +0900
-@@ -92,7 +92,7 @@
- #endif /* OPTIMIZE */
+Index: include/asm-cris/arch-v10/byteorder.h
+===================================================================
+--- include/asm-cris/arch-v10/byteorder.h.orig	2006-09-19 23:42:06.000000000 -0400
++++ include/asm-cris/arch-v10/byteorder.h	2006-10-07 09:02:17.378544514 -0400
+@@ -9,14 +9,14 @@
+  * them together into ntohl etc.
+  */
  
- 
--static __inline__ __const__ __u32 __fswahw32(__u32 x)
-+static __inline__ __u32 __fswahw32(__u32 x)
+-static inline __attribute_const__ __u32 ___arch__swab32(__u32 x)
++static inline __u32 ___arch__swab32(__u32 x)
  {
- 	return __arch__swahw32(x);
- }
-@@ -106,7 +106,7 @@
+ 	__asm__ ("swapwb %0" : "=r" (x) : "0" (x));
+   
+ 	return(x);
  }
  
- 
--static __inline__ __const__ __u32 __fswahb32(__u32 x)
-+static __inline__ __u32 __fswahb32(__u32 x)
+-static inline __attribute_const__ __u16 ___arch__swab16(__u16 x)
++static inline __u16 ___arch__swab16(__u16 x)
  {
- 	return __arch__swahb32(x);
+ 	__asm__ ("swapb %0" : "=r" (x) : "0" (x));
+ 	
+Index: include/asm-powerpc/byteorder.h
+===================================================================
+--- include/asm-powerpc/byteorder.h.orig	2006-09-19 23:42:06.000000000 -0400
++++ include/asm-powerpc/byteorder.h	2006-10-07 09:02:17.378544514 -0400
+@@ -40,7 +40,7 @@
+ 	__asm__ __volatile__ ("stwbrx %1,0,%2" : "=m" (*addr) : "r" (val), "r" (addr));
  }
+ 
+-static __inline__ __attribute_const__ __u16 ___arch__swab16(__u16 value)
++static __inline__ __u16 ___arch__swab16(__u16 value)
+ {
+ 	__u16 result;
+ 
+@@ -50,7 +50,7 @@
+ 	return result;
+ }
+ 
+-static __inline__ __attribute_const__ __u32 ___arch__swab32(__u32 value)
++static __inline__ __u32 ___arch__swab32(__u32 value)
+ {
+ 	__u32 result;
+ 
+Index: include/asm-arm/byteorder.h
+===================================================================
+--- include/asm-arm/byteorder.h.orig	2006-10-07 09:02:59.286816053 -0400
++++ include/asm-arm/byteorder.h	2006-10-07 09:03:19.256851602 -0400
+@@ -18,7 +18,7 @@
+ #include <linux/compiler.h>
+ #include <asm/types.h>
+ 
+-static inline __attribute_const__ __u32 ___arch__swab32(__u32 x)
++static __inline__ __attribute_const__ __u32 ___arch__swab32(__u32 x)
+ {
+ 	__u32 t;
+ 
+@@ -29,7 +29,7 @@
+ 		 * right thing and not screw it up to different degrees
+ 		 * depending on the gcc version.
+ 		 */
+-		asm ("eor\t%0, %1, %1, ror #16" : "=r" (t) : "r" (x));
++		__asm__ ("eor\t%0, %1, %1, ror #16" : "=r" (t) : "r" (x));
+ 	} else
+ #endif
+ 		t = x ^ ((x << 16) | (x >> 16)); /* eor r1,r0,r0,ror #16 */

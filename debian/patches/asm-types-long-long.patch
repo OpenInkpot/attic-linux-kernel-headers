@@ -1,6 +1,7 @@
-diff -Nuar include.org/asm-arm/types.h include/asm-arm/types.h
---- include.org/asm-arm/types.h	2003-10-16 00:09:54.000000000 +0900
-+++ include/asm-arm/types.h	2004-07-31 22:59:03.000000000 +0900
+Index: include/asm-arm/types.h
+===================================================================
+--- include/asm-arm/types.h.orig	2006-06-11 02:19:22.000000000 -0400
++++ include/asm-arm/types.h	2006-06-11 02:19:25.000000000 -0400
 @@ -19,9 +19,9 @@
  typedef __signed__ int __s32;
  typedef unsigned int __u32;
@@ -14,9 +15,10 @@ diff -Nuar include.org/asm-arm/types.h include/asm-arm/types.h
  #endif
  
  #endif /* __ASSEMBLY__ */
-diff -Nuar include.org/asm-i386/types.h include/asm-i386/types.h
---- include.org/asm-i386/types.h	2003-10-16 00:13:05.000000000 +0900
-+++ include/asm-i386/types.h	2004-07-31 22:59:43.000000000 +0900
+Index: include/asm-i386/types.h
+===================================================================
+--- include/asm-i386/types.h.orig	2006-06-11 02:19:22.000000000 -0400
++++ include/asm-i386/types.h	2006-06-11 02:19:25.000000000 -0400
 @@ -19,9 +19,9 @@
  typedef __signed__ int __s32;
  typedef unsigned int __u32;
@@ -30,9 +32,27 @@ diff -Nuar include.org/asm-i386/types.h include/asm-i386/types.h
  #endif
  
  #endif /* __ASSEMBLY__ */
-diff -Nuar include.org/asm-m68k/types.h include/asm-m68k/types.h
---- include.org/asm-m68k/types.h	2003-10-16 00:09:42.000000000 +0900
-+++ include/asm-m68k/types.h	2004-07-31 23:00:13.000000000 +0900
+Index: include/asm-m32r/types.h
+===================================================================
+--- include/asm-m32r/types.h.orig	2006-06-11 02:19:22.000000000 -0400
++++ include/asm-m32r/types.h	2006-06-11 02:19:25.000000000 -0400
+@@ -23,9 +23,9 @@
+ typedef __signed__ int __s32;
+ typedef unsigned int __u32;
+ 
+-#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+-typedef __signed__ long long __s64;
+-typedef unsigned long long __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long __u64;
+ #endif
+ #endif /* __ASSEMBLY__ */
+ 
+Index: include/asm-m68k/types.h
+===================================================================
+--- include/asm-m68k/types.h.orig	2006-06-11 02:19:22.000000000 -0400
++++ include/asm-m68k/types.h	2006-06-11 02:19:25.000000000 -0400
 @@ -27,9 +27,9 @@
  typedef __signed__ int __s32;
  typedef unsigned int __u32;
@@ -46,10 +66,11 @@ diff -Nuar include.org/asm-m68k/types.h include/asm-m68k/types.h
  #endif
  
  #endif /* __ASSEMBLY__ */
-diff -Nuar include.org/asm-mips/types.h include/asm-mips/types.h
---- include.org/asm-mips/types.h	2003-10-16 00:10:22.000000000 +0900
-+++ include/asm-mips/types.h	2004-07-31 23:00:34.000000000 +0900
-@@ -41,9 +41,9 @@
+Index: include/asm-mips/types.h
+===================================================================
+--- include/asm-mips/types.h.orig	2006-06-11 02:19:22.000000000 -0400
++++ include/asm-mips/types.h	2006-06-11 02:19:25.000000000 -0400
+@@ -34,9 +34,9 @@
  
  #else
  
@@ -62,9 +83,10 @@ diff -Nuar include.org/asm-mips/types.h include/asm-mips/types.h
  #endif
  
  #endif
-diff -Nuar include.org/asm-parisc/types.h include/asm-parisc/types.h
---- include.org/asm-parisc/types.h	2003-10-16 00:10:33.000000000 +0900
-+++ include/asm-parisc/types.h	2004-07-31 23:01:17.000000000 +0900
+Index: include/asm-parisc/types.h
+===================================================================
+--- include/asm-parisc/types.h.orig	2006-06-11 02:19:22.000000000 -0400
++++ include/asm-parisc/types.h	2006-06-11 02:19:25.000000000 -0400
 @@ -19,9 +19,9 @@
  typedef __signed__ int __s32;
  typedef unsigned int __u32;
@@ -78,25 +100,10 @@ diff -Nuar include.org/asm-parisc/types.h include/asm-parisc/types.h
  #endif
  
  #endif /* __ASSEMBLY__ */
-diff -Nuar include.org/asm-ppc/types.h include/asm-ppc/types.h
---- include.org/asm-ppc/types.h	2003-10-16 00:14:24.000000000 +0900
-+++ include/asm-ppc/types.h	2004-07-31 23:01:41.000000000 +0900
-@@ -12,9 +12,9 @@
- typedef __signed__ int __s32;
- typedef unsigned int __u32;
- 
--#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
--typedef __signed__ long long __s64;
--typedef unsigned long long __u64;
-+#if defined(__GNUC__)
-+__extension__ typedef __signed__ long long __s64;
-+__extension__ typedef unsigned long long __u64;
- #endif
- 
- typedef struct {
-diff -Nuar include.org/asm-sh/types.h include/asm-sh/types.h
---- include.org/asm-sh/types.h	2003-10-16 00:14:30.000000000 +0900
-+++ include/asm-sh/types.h	2004-07-31 23:02:59.000000000 +0900
+Index: include/asm-sh/types.h
+===================================================================
+--- include/asm-sh/types.h.orig	2006-06-11 02:19:22.000000000 -0400
++++ include/asm-sh/types.h	2006-06-11 02:19:25.000000000 -0400
 @@ -19,9 +19,9 @@
  typedef __signed__ int __s32;
  typedef unsigned int __u32;
@@ -110,9 +117,10 @@ diff -Nuar include.org/asm-sh/types.h include/asm-sh/types.h
  #endif
  
  #endif /* __ASSEMBLY__ */
-diff -Nuar include.org/asm-sparc/types.h include/asm-sparc/types.h
---- include.org/asm-sparc/types.h	2004-07-19 15:47:45.000000000 +0900
-+++ include/asm-sparc/types.h	2004-07-31 23:03:42.000000000 +0900
+Index: include/asm-sparc/types.h
+===================================================================
+--- include/asm-sparc/types.h.orig	2006-06-11 02:19:25.000000000 -0400
++++ include/asm-sparc/types.h	2006-06-11 02:19:25.000000000 -0400
 @@ -28,9 +28,9 @@
  typedef __signed__ int __s32;
  typedef unsigned int __u32;
@@ -126,9 +134,10 @@ diff -Nuar include.org/asm-sparc/types.h include/asm-sparc/types.h
  #endif
  
  #endif /* __ASSEMBLY__ */
-diff -Nuar include.org/asm-x86_64/types.h include/asm-x86_64/types.h
---- include.org/asm-x86_64/types.h	2004-07-31 23:11:07.000000000 +0900
-+++ include/asm-x86_64/types.h	2004-07-31 23:10:40.000000000 +0900
+Index: include/asm-x86_64/types.h
+===================================================================
+--- include/asm-x86_64/types.h.orig	2006-06-11 02:19:22.000000000 -0400
++++ include/asm-x86_64/types.h	2006-06-11 02:19:25.000000000 -0400
 @@ -19,8 +19,10 @@
  typedef __signed__ int __s32;
  typedef unsigned int __u32;
@@ -141,4 +150,21 @@ diff -Nuar include.org/asm-x86_64/types.h include/asm-x86_64/types.h
 +#endif
  
  #endif /* __ASSEMBLY__ */
+ 
+Index: include/asm-powerpc/types.h
+===================================================================
+--- include/asm-powerpc/types.h.orig	2006-06-11 02:19:35.000000000 -0400
++++ include/asm-powerpc/types.h	2006-06-11 02:20:19.000000000 -0400
+@@ -40,9 +40,9 @@
+ typedef __signed__ long __s64;
+ typedef unsigned long __u64;
+ #else
+-#if defined(__GNUC__) && !defined(__STRICT_ANSI__)
+-typedef __signed__ long long __s64;
+-typedef unsigned long long __u64;
++#if defined(__GNUC__)
++__extension__ typedef __signed__ long long __s64;
++__extension__ typedef unsigned long long __u64;
+ #endif
+ #endif /* __powerpc64__ */
  

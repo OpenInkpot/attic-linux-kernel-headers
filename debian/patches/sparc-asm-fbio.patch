@@ -1,26 +1,36 @@
-diff -ur linux-kernel-headers-2.5.999-test7-bk.orig/include/asm-sparc/fbio.h linux-kernel-headers-2.5.999-test7-bk/include/asm-sparc/fbio.h
---- linux-kernel-headers-2.5.999-test7-bk.orig/include/asm-sparc/fbio.h	2003-10-15 11:10:33.000000000 -0400
-+++ linux-kernel-headers-2.5.999-test7-bk/include/asm-sparc/fbio.h	2004-01-20 21:43:31.000000000 -0500
-@@ -1,6 +1,8 @@
+2005-07-22 gotom
+Update to add missing linux/compiler.h, and sync with asm-sparc64/fbio.h.
+
+--- include/asm-sparc64/fbio.h	2005-07-13 13:46:46.000000000 +0900
++++ include/asm-sparc64/fbio.h.gotom	2005-07-22 15:46:02.026710015 +0900
+@@ -2,6 +2,7 @@
+ #define __LINUX_FBIO_H
+ 
+ #include <linux/compiler.h>
++#include <linux/fb.h>
+ 
+ /* Constants used for fbio SunOS compatibility */
+ /* (C) 1996 Miguel de Icaza */
+--- include/asm-sparc/fbio.h	2005-07-13 13:46:46.000000000 +0900
++++ include/asm-sparc/fbio.h.gotom	2005-07-22 15:45:24.899685359 +0900
+@@ -1,6 +1,9 @@
  #ifndef __LINUX_FBIO_H
  #define __LINUX_FBIO_H
  
++#include <linux/compiler.h>
 +#include <linux/fb.h>
 +
  /* Constants used for fbio SunOS compatibility */
  /* (C) 1996 Miguel de Icaza */
  
-diff -ur linux-kernel-headers-2.5.999-test7-bk.orig/include/asm-sparc64/fbio.h linux-kernel-headers-2.5.999-test7-bk/include/asm-sparc64/fbio.h
---- linux-kernel-headers-2.5.999-test7-bk.orig/include/asm-sparc64/fbio.h	2003-10-15 11:09:46.000000000 -0400
-+++ linux-kernel-headers-2.5.999-test7-bk/include/asm-sparc64/fbio.h	2004-01-20 21:43:26.000000000 -0500
-@@ -1,6 +1,8 @@
- #ifndef __LINUX_FBIO_H
- #define __LINUX_FBIO_H
+@@ -97,8 +100,8 @@
+         struct fbcurpos hot;    /* cursor hot spot */
+         struct fbcmap cmap;     /* color map info */
+         struct fbcurpos size;   /* cursor bit map size */
+-        char *image;            /* cursor image bits */
+-        char *mask;             /* cursor mask bits */
++        char __user *image;     /* cursor image bits */
++        char __user *mask;      /* cursor mask bits */
+ };
  
-+#include <linux/fb.h>
-+
- /* Constants used for fbio SunOS compatibility */
- /* (C) 1996 Miguel de Icaza */
- 
-
-
+ /* set/get cursor attributes/shape */

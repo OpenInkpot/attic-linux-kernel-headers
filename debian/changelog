@@ -1,3 +1,9 @@
+linux-kernel-headers (2.6.18-1) unstable; urgency=low
+
+  * Merged debian 2.6.18.
+
+ -- Alexander Shishkin <virtuoso@slind.org>  Wed, 26 Sep 2007 16:47:55 +0400
+
 linux-kernel-headers (2.6.12.0-1.slind1) unstable; urgency=low
 
   * Slind version.

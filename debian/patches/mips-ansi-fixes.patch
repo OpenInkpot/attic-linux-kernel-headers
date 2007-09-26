@@ -1,6 +1,8 @@
---- include.orig/asm-mips/atomic.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/asm-mips/atomic.h	2005-05-04 17:02:37.441096029 +0900
-@@ -30,6 +30,8 @@ extern spinlock_t atomic_lock;
+Index: include/asm-mips/atomic.h
+===================================================================
+--- include/asm-mips/atomic.h.orig	2006-06-05 13:18:23.000000000 -0400
++++ include/asm-mips/atomic.h	2006-06-10 00:22:40.481313069 -0400
+@@ -29,6 +29,8 @@
  
  typedef struct { volatile int counter; } atomic_t;
  
@@ -9,25 +11,26 @@
  #define ATOMIC_INIT(i)    { (i) }
  
  /*
-@@ -650,4 +652,6 @@ static __inline__ long atomic64_sub_if_p
+@@ -725,5 +727,6 @@
  #define smp_mb__before_atomic_inc()	smp_mb()
  #define smp_mb__after_atomic_inc()	smp_mb()
  
 +#endif /* __KERNEL__ */
-+
+ #include <asm-generic/atomic.h>
  #endif /* _ASM_ATOMIC_H */
---- include.orig/asm-mips/system.h	2005-04-21 09:03:16.000000000 +0900
-+++ include/asm-mips/system.h	2005-05-04 17:02:04.181541329 +0900
-@@ -12,6 +12,8 @@
+Index: include/asm-mips/system.h
+===================================================================
+--- include/asm-mips/system.h.orig	2006-06-05 13:18:23.000000000 -0400
++++ include/asm-mips/system.h	2006-06-10 00:22:40.481313069 -0400
+@@ -12,5 +12,7 @@
  #ifndef _ASM_SYSTEM_H
  #define _ASM_SYSTEM_H
  
 +#ifdef __KERNEL__
 +
- #include <linux/config.h>
  #include <linux/types.h>
  
-@@ -435,4 +437,6 @@ do {						\
+@@ -462,4 +464,6 @@
  
  #define arch_align_stack(x) (x)
  

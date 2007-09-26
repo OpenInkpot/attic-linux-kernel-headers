@@ -1,18 +1,20 @@
 Included by a lot of other <linux/> headers.  Shouldn't be needed outside of
 __KERNEL__.
 
---- include/linux/radix-tree.h.orig	2003-10-15 11:11:21.000000000 -0400
-+++ include/linux/radix-tree.h	2003-11-05 09:30:42.000000000 -0500
+Index: include/linux/radix-tree.h
+===================================================================
+--- include/linux/radix-tree.h.orig	2006-06-05 13:18:23.000000000 -0400
++++ include/linux/radix-tree.h	2006-06-10 00:14:28.847484175 -0400
 @@ -19,6 +19,8 @@
  #ifndef _LINUX_RADIX_TREE_H
  #define _LINUX_RADIX_TREE_H
  
 +#ifdef __KERNEL__
 +
+ #include <linux/sched.h>
  #include <linux/preempt.h>
- 
- struct radix_tree_node;
-@@ -54,4 +56,5 @@
+ #include <linux/types.h>
+@@ -70,4 +72,5 @@
  	preempt_enable();
  }
  

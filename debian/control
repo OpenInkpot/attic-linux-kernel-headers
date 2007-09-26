@@ -2,8 +2,8 @@ Source: linux-kernel-headers
 Section: host-tools
 Priority: standard
 Maintainer: Alexander Shishkin <virtuoso@slind.org>
-Build-Depends: debhelper (>= 4.1.0), cdbs
-Standards-Version: 3.6.1
+Build-Depends: debhelper (>= 4.1.0), cdbs, quilt
+Standards-Version: 3.7.2
 
 Package: linux-kernel-headers
 Architecture: any

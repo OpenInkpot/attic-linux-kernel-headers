@@ -4,12 +4,12 @@ ARCHES="alpha amd64 arm i386 ia64 m32r m68k mips mipsel hppa powerpc ppc64 s390 
 
 for arch in $ARCHES
 do
-  if test $arch = mipsel; then
+  if test $arch = armeb; then
+    karch=arm
+  elif test $arch = mipsel; then
     karch=mips
   elif test $arch = hppa; then
     karch=parisc
-  elif test $arch = powerpc; then
-    karch=ppc
   elif test $arch = amd64; then
     karch=x86_64
   else
