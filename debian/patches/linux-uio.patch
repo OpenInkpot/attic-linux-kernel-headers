@@ -1,0 +1,45 @@
+Move function prototypes into #ifdef __KERNEL__
+
+Index: linux-kernel-headers-2.6.18/include/linux/uio.h
+===================================================================
+--- linux-kernel-headers-2.6.18.orig/include/linux/uio.h	2006-09-20 03:42:06.000000000 +0000
++++ linux-kernel-headers-2.6.18/include/linux/uio.h	2008-02-04 15:43:40.962971565 +0000
+@@ -30,20 +30,6 @@
+ 	size_t iov_len;
+ };
+ 
+-#endif
+-
+-/*
+- *	UIO_MAXIOV shall be at least 16 1003.1g (5.4.1.1)
+- */
+- 
+-#define UIO_FASTIOV	8
+-#define UIO_MAXIOV	1024
+-#if 0
+-#define UIO_MAXIOV	16	/* Maximum iovec's in one operation 
+-				   16 matches BSD */
+-                                /* Beg pardon: BSD has 1024 --ANK */
+-#endif
+-
+ /*
+  * Total number of bytes covered by an iovec.
+  *
+@@ -64,3 +50,17 @@
+ unsigned long iov_shorten(struct iovec *iov, unsigned long nr_segs, size_t to);
+ 
+ #endif
++
++/*
++ *	UIO_MAXIOV shall be at least 16 1003.1g (5.4.1.1)
++ */
++ 
++#define UIO_FASTIOV	8
++#define UIO_MAXIOV	1024
++#if 0
++#define UIO_MAXIOV	16	/* Maximum iovec's in one operation 
++				   16 matches BSD */
++                                /* Beg pardon: BSD has 1024 --ANK */
++#endif
++
++#endif
