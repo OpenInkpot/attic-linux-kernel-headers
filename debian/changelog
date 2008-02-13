@@ -1,3 +1,17 @@
+linux-kernel-headers (2.6.18-2) unstable; urgency=low
+
+  * New release.
+
+  [ Alexander Shishkin ]
+  * update to 2.6.18
+  * fix excessive endif in rules
+  * bring patch series back to live
+
+  [ Dmitry Baryshkov ]
+  * Fix <linux/uio.h>
+
+ -- Alexander Shishkin <virtuoso@slind.org>  Wed, 13 Feb 2008 18:27:40 +0300
+
 linux-kernel-headers (2.6.18-1) unstable; urgency=low
 
   * Merged debian 2.6.18.
