@@ -1,3 +1,10 @@
+linux-kernel-headers (2.6.18-2) unstable; urgency=low
+
+  * Updated version.h
+  * armel supported added: it's arm CPU.
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Tue, 22 Apr 2008 02:26:01 +0700
+
 linux-kernel-headers (2.6.18-1) unstable; urgency=low
 
   * Merged debian 2.6.18.
